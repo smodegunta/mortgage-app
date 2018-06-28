@@ -13,6 +13,8 @@ export class Tile {
   text: any = {value: '', label: ''};
 }
 
+const LOAN_UPLOAD = 'http://573ce40c.ngrok.io/borrower/loan/document/uploadLoanDocument';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -31,6 +33,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = false;
+    this.onSubmit();
     this.quoteService.getRandomQuote({ category: 'dev' })
       .pipe(finalize(() => { this.isLoading = false; }))
       .subscribe((quote: string) => { this.quote = quote; });
@@ -142,6 +145,7 @@ export class HomeComponent implements OnInit {
       width: '750px',
       data: {
         placeholder: file,
+        api: LOAN_UPLOAD
       }
     });
 

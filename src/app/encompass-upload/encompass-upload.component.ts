@@ -26,10 +26,18 @@ export class EncompassUploadComponent implements OnInit {
   response: string;
   // tslint:disable-next-line:no-input-rename
   @Input('placeholder') placeholder: string;
+  // tslint:disable-next-line:no-input-rename
+  @Input('api') api: string;
 
   constructor () {
+  }
+
+
+  ngOnInit() {
+    console.log('api', this.api);
+    console.log('api', this.placeholder);
     this.uploader = new FileUploader({
-      url: URL,
+      url: this.api,
       disableMultipart: true, // 'DisableMultipart' must be 'true' for formatDataFunction to be called.
       formatDataFunctionIsAsync: true,
       formatDataFunction: async (item: any) => {
@@ -53,10 +61,7 @@ export class EncompassUploadComponent implements OnInit {
     this.uploader.response.subscribe( (res: any) => {
       this.response = res;
     } );
-  }
-
-
-  ngOnInit() { }
+   }
 
   public fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;
