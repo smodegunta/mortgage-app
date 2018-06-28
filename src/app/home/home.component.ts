@@ -121,15 +121,15 @@ export class HomeComponent implements OnInit {
 
   getSummaryTiles(summary: any) {
     const summaryTiles: Tile[] = [
-      { text: { value: summary.loanNumber, label: 'Loan Number', type: 'string'}, cols: 1, rows: 1, color: '#F0F0F0 ' },
-      { text: { value: summary.loanAmount, label: 'Loan Amount' }, cols: 1, rows: 1, color: '#F8F8F8 ' },
-      { text: { value: summary.interestRate, label: 'Intrest Rate'}, cols: 1, rows: 1, color: '#F0F0F0 ' },
-      { text: { value: summary.loanPurpose, label: 'Loan Purpose'}, cols: 1, rows: 1, color: '#F8F8F8 ' },
-      { text: { value: summary.loanTerm, label: 'Loan Term'}, cols: 1, rows: 1, color: '#F8F8F8 ' },
-      { text: { value: summary.loanAmount, label: 'Loan Amount'}, cols: 1, rows: 1, color: '#F0F0F0 ' },
-      { text: { value: summary.lockDate, label: 'Lock Date', type: 'date'}, cols: 1, rows: 1, color: '#F8F8F8 ' },
+      { text: { value: summary.loanNumber, label: 'Loan Number', type: 'string'}, cols: 1, rows: 1, color: '#F8F8F8' },
+      { text: { value: summary.loanAmount, label: 'Loan Amount' }, cols: 1, rows: 1, color: '#F8F8F8' },
+      { text: { value: summary.interestRate, label: 'Intrest Rate'}, cols: 1, rows: 1, color: '#F8F8F8' },
+      { text: { value: summary.loanPurpose, label: 'Loan Purpose'}, cols: 1, rows: 1, color: '#F8F8F8' },
+      { text: { value: summary.loanTerm, label: 'Loan Term'}, cols: 1, rows: 1, color: '#F8F8F8' },
+      { text: { value: summary.loanAmount, label: 'Loan Amount'}, cols: 1, rows: 1, color: '#F8F8F8' },
+      { text: { value: summary.lockDate, label: 'Lock Date', type: 'date'}, cols: 1, rows: 1, color: '#F8F8F8' },
       { text: { value: summary.lockExpirationDate, label: 'Loan Expiration Date', type: 'date'},
-       cols: 1, rows: 1, color: '#F0F0F0' }
+       cols: 1, rows: 1, color: '#F8F8F8' }
 
     ];
     return summaryTiles;

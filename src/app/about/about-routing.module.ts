@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { extract } from '@app/core';
 import { AboutComponent } from './about.component';
-import { MatFileUploadModule } from 'angular-material-fileupload';
 
 const routes: Routes = [
   // Module is lazy loaded, see app-routing.module.ts
@@ -11,8 +10,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes),
-            MatFileUploadModule],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   providers: []
 })
