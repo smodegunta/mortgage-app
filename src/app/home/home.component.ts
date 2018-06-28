@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 
 import { QuoteService } from './quote.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { EncompassUploadDialogComponent } from '../encompass-upload-dialog/encompass-upload-dialog.component';
 
 
 export class Tile {
@@ -25,7 +27,7 @@ export class HomeComponent implements OnInit {
   loanActionItems: any[];
   loanTiles: any;
 
-  constructor(private quoteService: QuoteService) { }
+  constructor(private quoteService: QuoteService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.isLoading = false;
@@ -133,5 +135,18 @@ export class HomeComponent implements OnInit {
 
     ];
     return summaryTiles;
+  }
+
+  openDialog(file: string): void {
+    const dialogRef = this.dialog.open(EncompassUploadDialogComponent, {
+      width: '750px',
+      data: {
+        placeholder: file,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
   }
 }

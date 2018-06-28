@@ -1,20 +1,23 @@
+<mat-toolbar>
+  Upload File
+</mat-toolbar>
 <div>
   <mat-card ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader"
     class="well my-drop-zone">
-    {{placeholder}}
-  </mat-card>
+    Drop file  {{" - " +placeholder}} 
+</mat-card>
   <mat-grid-list cols="4" rowHeight="50px" *ngIf="uploader.queue.length>0">
-    <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'#F8F8F8'">
-      Name
+    <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'#D0D0D0 '">
+     <h4> Name</h4>
     </mat-grid-tile>
-    <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'#F8F8F8'">
-      Size
+    <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'#D0D0D0 '">
+        <h4>  Size</h4>
     </mat-grid-tile>
-    <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'#F8F8F8'">
-      Progress
+    <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'#D0D0D0 '">
+        <h4>  Progress</h4>
     </mat-grid-tile>
-    <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'#F8F8F8'">
-      Actions
+    <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'#D0D0D0'">
+        <h4> Actions</h4>
     </mat-grid-tile>
     <ng-container *ngFor="let item of uploader.queue">
       <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'#F8F8F8'">
@@ -32,7 +35,7 @@
       </mat-grid-tile>
     </ng-container>
   </mat-grid-list>
-
+</div>
 
   <!-- <div>
       <div>
@@ -51,4 +54,3 @@
         <span class="glyphicon glyphicon-trash"></span> Remove all
       </button>
     </div> -->
-</div>
