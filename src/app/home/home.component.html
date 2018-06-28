@@ -23,7 +23,7 @@
           Loan Details
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <mat-grid-list *ngIf="loanTiles" cols="4" rowHeight="100px">
+      <mat-grid-list *ngIf="loanTiles" cols="4" rowHeight="75px">
           <mat-grid-tile  [colspan]="4" [rowspan]="1" [style.background]="'#F8F8F8'">
             <h4>{{loanDetails.borrower.firstName + " "}}{{loanDetails.borrower.lastName + " "}}</h4>
             <p>{{loanDetails.borrower.address}}</p>
