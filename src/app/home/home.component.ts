@@ -14,7 +14,6 @@ export class Tile {
 }
 
 const LOAN_UPLOAD = 'http://573ce40c.ngrok.io/borrower/loan/document/uploadLoanDocument';
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -22,7 +21,6 @@ const LOAN_UPLOAD = 'http://573ce40c.ngrok.io/borrower/loan/document/uploadLoanD
 })
 export class HomeComponent implements OnInit {
 
-  quote: string;
   isLoading: boolean;
   panelOpenState = true;
   loanDetails: any;
@@ -33,10 +31,13 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = false;
-    this.onSubmit();
-    this.quoteService.getRandomQuote({ category: 'dev' })
-      .pipe(finalize(() => { this.isLoading = false; }))
-      .subscribe((quote: string) => { this.quote = quote; });
+    // this.onSubmit();
+    this.quoteService.getLoanDetails({loanId: '9a06733f-b10c-4d45-9970-a481763cbb6c' }).subscribe(response => {
+      console.log(response);
+    });
+    // this.quoteService.getLoanDetails({ )
+    //   .pipe(finalize(() => { this.isLoading = false; }))
+    //   .subscribe((response: any) => { console.log(response); });
   }
 
   onSubmit() {

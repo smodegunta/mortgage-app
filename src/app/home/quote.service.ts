@@ -4,12 +4,13 @@ import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 const routes = {
-  quote: (c: RandomQuoteContext) => `/jokes/random?category=${c.category}`
+  loanDetails: (c: LoanContext) =>
+  `http://1a65465e.ngrok.io/borrower/loan/${c.loanId}`
 };
 
-export interface RandomQuoteContext {
+export interface LoanContext {
   // The quote's category: 'dev', 'explicit'...
-  category: string;
+  loanId: string;
 }
 
 @Injectable()
@@ -17,10 +18,10 @@ export class QuoteService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getRandomQuote(context: RandomQuoteContext): Observable<string> {
+  getLoanDetails(context: LoanContext): Observable<string> {
     return this.httpClient
       .cache()
-      .get(routes.quote(context))
+      .get(routes.loanDetails(context))
       .pipe(
         map((body: any) => body.value),
         catchError(() => of('Error, could not load joke :-('))
