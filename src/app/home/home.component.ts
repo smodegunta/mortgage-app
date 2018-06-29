@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit {
     const summaryTiles: Tile[] = [
       { text: { value: summary.loanNumber, label: 'Loan Number', type: 'string'}, cols: 1, rows: 1, color: '#F8F8F8' },
       { text: { value: summary.loanAmount, label: 'Loan Amount' }, cols: 1, rows: 1, color: '#F8F8F8' },
-      { text: { value: summary.interestRate, label: 'Intrest Rate'}, cols: 1, rows: 1, color: '#F8F8F8' },
+      { text: { value: summary.interestRate, label: 'Interest Rate'}, cols: 1, rows: 1, color: '#F8F8F8' },
       { text: { value: summary.loanPurpose, label: 'Loan Purpose'}, cols: 1, rows: 1, color: '#F8F8F8' },
       { text: { value: summary.loanTerm, label: 'Loan Term'}, cols: 1, rows: 1, color: '#F8F8F8' },
       { text: { value: summary.loanAmount, label: 'Loan Amount'}, cols: 1, rows: 1, color: '#F8F8F8' },
