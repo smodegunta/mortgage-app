@@ -47,24 +47,41 @@
           Electronic Loan Document Request
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <mat-list *ngFor="let item of loanActionItems">
-        <ng-container>
-          <h3 mat-subheader *ngIf="item.documentType==='Standard Form' && isURLAAttachment(item.attachments)">eSign Documents</h3>
-          <h3 mat-subheader *ngIf="item.documentType==='Needed'">Upload Documents</h3>
+      <h3 mat-subheader>eSign Documents</h3>
+      <mat-list *ngFor="let item of loanActionItems">       
+        <ng-container *ngIf="item.documentType==='Standard Form' && isURLAAttachment(item.attachments)">
           <mat-list-item *ngIf="item.borrower">
             <button mat-button color="accent" (click)="eSignDocument()" *ngIf="item.documentType==='Standard Form' && isURLAAttachment(item.attachments)">eSign</button>
-            <button mat-button color="accent" (click)="openDialog('Test file')" *ngIf="item.documentType==='Needed'">Upload</button>
             <h4 mat-line>{{ item.borrower.firstName + " "}}{{ item.borrower.lastName }}</h4>
             <p mat-line> {{ item.issuedDate | date}} </p>
+            <p mat-line> {{ item.category }} </p>
           </mat-list-item>
           <mat-list-item *ngIf="item.coBorrower">
             <button mat-button color="accent" (click)="eSignDocument()" *ngIf="item.documentType==='Standard Form' && isURLAAttachment(item.attachments)">eSign</button>
+            <h4 mat-line>{{ item.coBorrower.firstName + " "}}{{ item.coBorrower.lastName }}</h4>
+            <p mat-line> {{ item.issuedDate | date}} </p>
+            <p mat-line> {{ item.category }} </p>
+          </mat-list-item>
+        </ng-container>
+      </mat-list>
+      <mat-divider></mat-divider>
+      <h3 mat-subheader>Upload Documents</h3>
+      <mat-list *ngFor="let item of loanActionItems">
+        <ng-container *ngIf="item.documentType==='Needed'">
+          <mat-list-item *ngIf="item.borrower">
+            <button mat-button color="accent" (click)="openDialog('Test file')" *ngIf="item.documentType==='Needed'">Upload</button>
+            <h4 mat-line>{{ item.borrower.firstName + " "}}{{ item.borrower.lastName }}</h4>
+            <p mat-line> {{ item.issuedDate | date}} </p>
+            <p mat-line> {{ item.category }} </p>
+          </mat-list-item>
+          <mat-list-item *ngIf="item.coBorrower">
             <button mat-button color="accent" (click)="openDialog('Test file')" *ngIf="item.documentType==='Needed'">Upload</button>
             <h4 mat-line>{{ item.coBorrower.firstName + " "}}{{ item.coBorrower.lastName }}</h4>
             <p mat-line> {{ item.issuedDate | date}} </p>
+            <p mat-line> {{ item.category }} </p>
           </mat-list-item>
         </ng-container>
-     </mat-list>
+      </mat-list>
     </mat-expansion-panel>
   </mat-accordion>
 </div>
