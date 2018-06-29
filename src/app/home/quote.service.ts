@@ -11,6 +11,9 @@ const routes = {
   `borrower/loan/${c.loanId}/actionItems?emailId=${c.emailId}`,
 
   eSign: (c: ESignContext) =>
+  `borrower/loan/${c.loanId}/actionSign/${c.documentId}/attachments/${c.attachmentId}?firstName=${c.firstName}&lastName=${c.lastName}&email=${c.email}`,
+
+  submitESign: (c: SubmitESignContext) =>
   `borrower/loan/${c.loanId}/actionSign/${c.documentId}/attachments/${c.attachmentId}`
 };
 
@@ -20,6 +23,15 @@ export interface LoanContext {
   emailId: string;
 }
 export interface ESignContext {
+  loanId: string;
+  documentId: string;
+  attachmentId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
+export interface SubmitESignContext {
   loanId: string;
   documentId: string;
   attachmentId: string;
@@ -58,10 +70,10 @@ export class QuoteService {
       );
   }
 
-  submitESign(context: ESignContext): Observable<string> {
+  submitESign(context: SubmitESignContext): Observable<string> {
     return this.httpClient
       .cache()
-      .put(routes.eSign(context), {})
+      .put(routes.submitESign(context), {})
       .pipe(
         map((body: any) => body.viewUrl),
         catchError(() => of('Could not eSign'))

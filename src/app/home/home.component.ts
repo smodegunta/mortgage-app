@@ -118,7 +118,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  eSignDocument(documentId: any, attachments: any) {
+  eSignDocument(documentId: any, attachments: any, firstName: any, lastName: any) {
 
     // let email = 'divya.gupta@brimmatech.com';
     const loanId = LOAN_ID;
@@ -133,8 +133,10 @@ export class HomeComponent implements OnInit {
     localStorage.setItem('documentId', documentId);
     localStorage.setItem('attachmentId', attachmentId);
 
+    const email = this.authenticationService.credentials.username;
+
     this.isLoading = true;
-    this.quoteService.eSignDocument({ loanId, documentId, attachmentId }).subscribe(url => {
+    this.quoteService.eSignDocument({ loanId, documentId, attachmentId, firstName, lastName, email }).subscribe(url => {
       console.log(url);
       this.isLoading = false;
       window.location.replace(url);
