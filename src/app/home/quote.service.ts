@@ -14,7 +14,7 @@ const routes = {
   `borrower/loan/${c.loanId}/actionSign/${c.documentId}/attachments/${c.attachmentId}?firstName=${c.firstName}&lastName=${c.lastName}&email=${c.email}`,
 
   submitESign: (c: SubmitESignContext) =>
-  `borrower/loan/${c.loanId}/actionSign/${c.documentId}/attachments/${c.attachmentId}`
+  `borrower/loan/${c.loanId}/updateSigned/${c.documentId}/attachments/${c.attachmentId}`
 };
 
 export interface LoanContext {
