@@ -51,13 +51,13 @@
         <ng-container *ngIf="item.documentType==='Standard Form'">
           <h3 mat-subheader>eSign Documents</h3>
           <mat-list-item *ngIf="item.borrower">
-            <button mat-button color="accent" (click)="onSubmit()">eSign</button>
-            <h4 mat-line>{{ item.coBorrower.firstName + " "}}{{ item.coBorrower.lastName }}</h4>
+            <button mat-button color="accent" (click)="eSignDocument()">eSign</button>
+            <h4 mat-line>{{ item.coBorrower ? item.coBorrower.firstName : '' + " "}}{{ item.coBorrower ? item.coBorrower.lastName : '' }}</h4>
             <p mat-line> {{ item.issuedDate | date}} </p>
           </mat-list-item>
           <mat-list-item *ngIf="item.coBorrower">
-            <button mat-button color="accent" (click)="onSubmit()">eSign</button>
-            <h4 mat-line>{{ item.coBorrower.firstName + " "}}{{ item.coBorrower.lastName }}</h4>
+            <button mat-button color="accent" (click)="eSignDocument()">eSign</button>
+            <h4 mat-line>{{ item.coBorrower ? item.coBorrower.firstName : '' + " "}}{{ item.coBorrower ? item.coBorrower.lastName : '' }}</h4>
             <p mat-line> {{ item.issuedDate | date}} </p>
           </mat-list-item>
         </ng-container>
@@ -65,12 +65,12 @@
           <h3 mat-subheader>Fax or Upload Documents</h3>
           <mat-list-item *ngIf="item.borrower">
             <button mat-button color="accent" (click)="openDialog('Test file')">Upload</button>
-            <h4 mat-line>{{ item.coBorrower.firstName + " "}}{{ item.coBorrower.lastName }}</h4>
+            <h4 mat-line>{{ item.coBorrower ? item.coBorrower.firstName : '' + " "}}{{ item.coBorrower ? item.coBorrower.lastName : '' }}</h4>
             <p mat-line> {{ item.issuedDate | date}} </p>
           </mat-list-item>
           <mat-list-item *ngIf="item.coBorrower">
             <button mat-button color="accent" (click)="openDialog()">Upload</button>
-            <h4 mat-line>{{ item.coBorrower.firstName + " "}}{{ item.coBorrower.lastName }}</h4>
+            <h4 mat-line>{{ item.coBorrower ? item.coBorrower.firstName : '' + " "}}{{ item.coBorrower.lastName }}</h4>
             <p mat-line> {{ item.issuedDate | date}} </p>
           </mat-list-item>
         </ng-container>
