@@ -43,19 +43,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     // this.onSubmit();
-<<<<<<< HEAD
-    this.quoteService.getLoanDetails({ loanId: LOAN_ID })
-      .pipe(finalize(() => { this.isLoading = false; }))
-      .subscribe((response: any) => {
-        this.setLoanDetails(response.loanDetails);
-      });
-
-    this.quoteService.getActionItems({ loanId: LOAN_ID })
-      .pipe(finalize(() => { this.isLoading = false; }))
-      .subscribe((response: any) => {
-        this.setLoanActionItems(response.loanActionItems);
-      });
-=======
     let url = window.location.toString();
     if (url.indexOf('?event=signing_complete')) {
       this.submitEsign();
@@ -65,13 +52,12 @@ export class HomeComponent implements OnInit {
     .subscribe((response: any) => {
       this.setLoanDetails(response.loanDetails);
     });
-
+    console.log("im here..",this.authenticationService.credentials.username);
     this.quoteService.getActionItems({loanId: LOAN_ID , emailId: this.authenticationService.credentials.username})
     .pipe(finalize(() => { this.isLoading = false; }))
     .subscribe((response: any) => {
       this.setLoanActionItems(response.loanActionItems);
     });
->>>>>>> 87e4e24d948c61e378396b391b5f669eb10d3981
   }
 
   onSubmit(loanDetails: any) {
