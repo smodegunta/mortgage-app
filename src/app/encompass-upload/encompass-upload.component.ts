@@ -36,19 +36,15 @@ export class EncompassUploadComponent implements OnInit {
   ngOnInit() {
     console.log('api', this.api);
     console.log('api', this.placeholder);
+    const data = {
+      'documentLocator': 'DEV/1j9gRwgMQ9yOQak4lFg2_CKs & Marlboro LL Clinic 2017 (1).pdf'
+     };
     this.uploader = new FileUploader({
-      url: this.api,
-      disableMultipart: true, // 'DisableMultipart' must be 'true' for formatDataFunction to be called.
-      formatDataFunctionIsAsync: true,
-      formatDataFunction: async (item: any) => {
-        return new Promise( (resolve, reject) => {
-          resolve({
-            name: item._file.name,
-            length: item._file.size,
-            contentType: item._file.type,
-            date: new Date()
-          });
-        });
+      url: 'http://e1fa8a70.ngrok.io/borrower/loan/submitLoan',
+      method: 'POST',
+      parametersBeforeFiles: true,
+      additionalParameter: {
+        data: JSON.stringify(data)
       }
     });
 
