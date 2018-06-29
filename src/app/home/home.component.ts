@@ -15,7 +15,7 @@ export class Tile {
 }
 
 const LOAN_ID = '40e0e412-54b8-4111-8e42-144b14db70d5';
-const LOAN_UPLOAD = 'http://e1fa8a70.ngrok.io/borrower/loan/document/uploadLoanDocument';
+const LOAN_UPLOAD = 'https://4e490af2.ngrok.io/borrower/loan/document/uploadLoanDocument';
 const formData = {
   'loanNumber': '9a06733f-b10c-4d45-9970-a481763cbb6c',
   'document': {
