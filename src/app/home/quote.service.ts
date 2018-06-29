@@ -5,7 +5,7 @@ import { map, catchError } from 'rxjs/operators';
 
 const routes = {
   loanDetails: (c: LoanContext) =>
-  `http://1a65465e.ngrok.io/borrower/loan/${c.loanId}`
+  `borrower/loan/${c.loanId}`
 };
 
 export interface LoanContext {
