@@ -41,6 +41,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     // this.onSubmit();
+<<<<<<< HEAD
     this.quoteService.getLoanDetails({ loanId: LOAN_ID })
       .pipe(finalize(() => { this.isLoading = false; }))
       .subscribe((response: any) => {
@@ -52,6 +53,23 @@ export class HomeComponent implements OnInit {
       .subscribe((response: any) => {
         this.setLoanActionItems(response.loanActionItems);
       });
+=======
+    let url = window.location.toString();
+    if (url.indexOf('?event=signing_complete')) {
+      this.submitEsign();
+    }
+    this.quoteService.getLoanDetails({loanId: LOAN_ID })
+    .pipe(finalize(() => { this.isLoading = false; }))
+    .subscribe((response: any) => {
+      this.setLoanDetails(response.loanDetails);
+    });
+
+    this.quoteService.getActionItems({loanId: LOAN_ID })
+    .pipe(finalize(() => { this.isLoading = false; }))
+    .subscribe((response: any) => {
+      this.setLoanActionItems(response.loanActionItems);
+    });
+>>>>>>> 87e4e24d948c61e378396b391b5f669eb10d3981
   }
 
   onSubmit(loanDetails: any) {
@@ -80,18 +98,19 @@ export class HomeComponent implements OnInit {
   }
 
   getSummaryTiles(summary: any) {
+    if (!summary) {
+      return [];
+    }
     const summaryTiles: Tile[] = [
       { text: { value: summary.loanNumber, label: 'Loan Number', type: 'string' }, cols: 1, rows: 1, color: '#F8F8F8' },
       { text: { value: summary.loanAmount, label: 'Loan Amount' }, cols: 1, rows: 1, color: '#F8F8F8' },
-      { text: { value: summary.interestRate, label: 'Intrest Rate' }, cols: 1, rows: 1, color: '#F8F8F8' },
-      { text: { value: summary.loanPurpose, label: 'Loan Purpose' }, cols: 1, rows: 1, color: '#F8F8F8' },
-      { text: { value: summary.loanTerm, label: 'Loan Term' }, cols: 1, rows: 1, color: '#F8F8F8' },
-      { text: { value: summary.loanAmount, label: 'Loan Amount' }, cols: 1, rows: 1, color: '#F8F8F8' },
-      { text: { value: summary.lockDate, label: 'Lock Date', type: 'date' }, cols: 1, rows: 1, color: '#F8F8F8' },
-      {
-        text: { value: summary.lockExpirationDate, label: 'Loan Expiration Date', type: 'date' },
-        cols: 1, rows: 1, color: '#F8F8F8'
-      }
+      { text: { value: summary.interestRate, label: 'Interest Rate'}, cols: 1, rows: 1, color: '#F8F8F8' },
+      { text: { value: summary.loanPurpose, label: 'Loan Purpose'}, cols: 1, rows: 1, color: '#F8F8F8' },
+      { text: { value: summary.loanTerm, label: 'Loan Term'}, cols: 1, rows: 1, color: '#F8F8F8' },
+      { text: { value: summary.loanAmount, label: 'Loan Amount'}, cols: 1, rows: 1, color: '#F8F8F8' },
+      { text: { value: summary.lockDate, label: 'Lock Date', type: 'date'}, cols: 1, rows: 1, color: '#F8F8F8' },
+      { text: { value: summary.lockExpirationDate, label: 'Loan Expiration Date', type: 'date'},
+       cols: 1, rows: 1, color: '#F8F8F8' }
 
     ];
     return summaryTiles;
@@ -120,21 +139,46 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  eSignDocument() {
+  eSignDocument(documentId:any, attachments:any) {
 
-
-    // let loanId = this.loanDetails.id;
-    // let documentId = this.loanActionItems[4].id;
-    // let attachmentId = this.loanActionItems[4].attachments[0].name;
     // let email = 'divya.gupta@brimmatech.com';
-    const loanId = 'f3236bed-dd2a-4472-8000-55359aa8bd40';
-    const documentId = '0fa69697-bcbb-4ddb-8860-46fbc8bd0e6b';
-    const attachmentId = '0f7f0b9d-f822-48ee-b3b8-dfa02be90d3e';
+    const loanId = LOAN_ID;
 
+    const urlaAttachment = attachments.find((attachment: any) => attachment.title === '1003 - URLA');
+    let attachmentId = urlaAttachment.name;
+    if (!attachmentId) {
+      return;
+    }
+
+    localStorage.setItem('loanId', loanId);
+    localStorage.setItem('documentId', documentId);
+    localStorage.setItem('attachmentId', attachmentId);
+
+    this.isLoading = true;
     this.quoteService.eSignDocument({ loanId, documentId, attachmentId }).subscribe(url => {
       console.log(url);
+      this.isLoading = false;
       window.location.replace(url);
     });
+  }
+
+  submitEsign() {
+    let loanId = localStorage.getItem('loanId');
+    let documentId = localStorage.getItem('documentId');
+    let attachmentId = localStorage.getItem('attachmentId');
+
+    this.isLoading = true;
+
+    if (loanId && documentId && attachmentId) {
+      this.quoteService.submitESign({ loanId, documentId, attachmentId }).subscribe(url => {
+        console.log(url);
+        this.isLoading = false;
+
+        localStorage.removeItem('loanId');
+        localStorage.removeItem('documentId');
+        localStorage.removeItem('attachmentId');
+      });
+    }
   }
 
   isURLAAttachment(attachments: any) {
