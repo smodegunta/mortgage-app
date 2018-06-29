@@ -8,7 +8,7 @@ const routes = {
   `borrower/loan/${c.loanId}`,
 
   actionItems: (c: LoanContext) =>
-  `borrower/loan/${c.loanId}/actionItems`,
+  `borrower/loan/${c.loanId}/actionItems?emailId=${c.emailId}`,
 
   eSign: (c: ESignContext) =>
   `borrower/loan/${c.loanId}/actionSign/${c.documentId}/attachments/${c.attachmentId}`
@@ -17,6 +17,7 @@ const routes = {
 export interface LoanContext {
   // The quote's category: 'dev', 'explicit'...
   loanId: string;
+  emailId: string;
 }
 export interface ESignContext {
   loanId: string;

@@ -4,6 +4,7 @@ import { finalize } from 'rxjs/operators';
 import { QuoteService } from './quote.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { EncompassUploadDialogComponent } from '../encompass-upload-dialog/encompass-upload-dialog.component';
+import { AuthenticationService } from '@app/core';
 
 
 export class Tile {
@@ -28,7 +29,8 @@ export class HomeComponent implements OnInit {
   loanActionItems: any[];
   loanTiles: any;
 
-  constructor(private quoteService: QuoteService, public dialog: MatDialog) { }
+  constructor(private quoteService: QuoteService, public dialog: MatDialog,
+    private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     this.isLoading = true;
@@ -37,13 +39,13 @@ export class HomeComponent implements OnInit {
     if (url.indexOf('?event=signing_complete')) {
       this.submitEsign();
     }
-    this.quoteService.getLoanDetails({loanId: LOAN_ID })
+    this.quoteService.getLoanDetails({loanId: LOAN_ID, emailId: '' })
     .pipe(finalize(() => { this.isLoading = false; }))
     .subscribe((response: any) => {
       this.setLoanDetails(response.loanDetails);
     });
 
-    this.quoteService.getActionItems({loanId: LOAN_ID })
+    this.quoteService.getActionItems({loanId: LOAN_ID , emailId: this.authenticationService.credentials.username})
     .pipe(finalize(() => { this.isLoading = false; }))
     .subscribe((response: any) => {
       this.setLoanActionItems(response.loanActionItems);
@@ -108,7 +110,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  eSignDocument(documentId:any, attachments:any) {
+  eSignDocument(documentId: any, attachments: any) {
 
     // let email = 'divya.gupta@brimmatech.com';
     const loanId = LOAN_ID;
