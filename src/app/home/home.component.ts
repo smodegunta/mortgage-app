@@ -72,6 +72,9 @@ export class HomeComponent implements OnInit {
   }
 
   getSummaryTiles(summary: any) {
+    if (!summary) {
+      return [];
+    }
     const summaryTiles: Tile[] = [
       { text: { value: summary.loanNumber, label: 'Loan Number', type: 'string'}, cols: 1, rows: 1, color: '#F8F8F8' },
       { text: { value: summary.loanAmount, label: 'Loan Amount' }, cols: 1, rows: 1, color: '#F8F8F8' },

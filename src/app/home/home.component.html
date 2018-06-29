@@ -23,16 +23,16 @@
       </mat-expansion-panel-header>
       <mat-grid-list *ngIf="loanTiles" cols="4" rowHeight="75px">
         <mat-grid-tile [colspan]="4" [rowspan]="1" [style.background]="'#F8F8F8'">
-          <h4>{{loanDetails.borrower.firstName + " "}}{{loanDetails.borrower.lastName + " "}}</h4>
-          <p>{{loanDetails.borrower.address}}</p>
-          <p>{{loanDetails.borrower.city}}</p>
-          <p>{{loanDetails.borrower.state}}</p>
-          <p>{{loanDetails.borrower.zip}}</p>
+          <div class="container-box"><h4>{{loanDetails.borrower.firstName + " "}}{{loanDetails.borrower.lastName + " "}}</h4>
+          <div><span>{{loanDetails.borrower.address}}</span>
+          <span>{{loanDetails.borrower.city}}</span>
+          <span>{{loanDetails.borrower.state}}</span>
+          <span>{{loanDetails.borrower.zip}}</span></div></div>
         </mat-grid-tile>
         <mat-grid-tile *ngFor="let tile of loanTiles" [colspan]="tile.cols" [rowspan]="tile.rows" [style.background]="tile.color">
-          <h4>{{tile.text.label }}</h4>
+          <div class="container-box"><h4>{{tile.text.label }}</h4>
           <p *ngIf="tile.text.type==='date'"> {{tile.text.value | date }} </p>
-          <p *ngIf="tile.text.type !=='date'"> {{tile.text.value }} </p>
+          <p *ngIf="tile.text.type !=='date'"> {{tile.text.value }} </p></div>
         </mat-grid-tile>
       </mat-grid-list>
     </mat-expansion-panel>
@@ -46,8 +46,9 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <h3 mat-subheader>eSign Documents</h3>
-      <mat-list *ngFor="let item of loanActionItems">
-        <ng-container *ngIf="item.documentType==='Standard Form' && isURLAAttachment(item.attachments)">
+      <ng-container *ngFor="let item of loanActionItems">
+      <mat-list *ngIf="item.documentType==='Standard Form' && isURLAAttachment(item.attachments)">
+        <ng-container >
           <mat-list-item *ngIf="item.borrower">
             <button mat-button color="accent" (click)="eSignDocument(item.id, item.attachments)" *ngIf="item.documentType==='Standard Form' && isURLAAttachment(item.attachments)">eSign</button>
             <button mat-button color="primary" (click)="eSignDocument(item.id, item.attachments)" *ngIf="item.documentType==='Standard Form' && isURLAAttachment(item.attachments) && item.isRecieved">eSigned</button>
@@ -64,10 +65,12 @@
           </mat-list-item>
         </ng-container>
       </mat-list>
+    </ng-container>
       <mat-divider></mat-divider>
       <h3 mat-subheader>Upload Documents</h3>
-      <mat-list *ngFor="let item of loanActionItems">
-        <ng-container *ngIf="item.documentType==='Needed'">
+      <ng-container *ngFor="let item of loanActionItems">
+      <mat-list *ngIf="item.documentType==='Needed'">
+        <ng-container >
           <mat-list-item *ngIf="item.borrower">
             <button mat-button color="accent" (click)="openDialog('Test file')" *ngIf="item.documentType==='Needed'">Upload</button>
             <h4 mat-line>{{ item.borrower.firstName + " "}}{{ item.borrower.lastName }}</h4>
@@ -82,6 +85,7 @@
           </mat-list-item>
         </ng-container>
       </mat-list>
+    </ng-container>
     </mat-expansion-panel>
   </mat-accordion>
 </div>

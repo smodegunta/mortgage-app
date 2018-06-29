@@ -2,7 +2,7 @@
   "APP_NAME": "Mortgage Application",
   "About": "Create Loan",
   "Hello world !": "Hello world !",
-  "Home": "Search Loan",
+  "Home": "Loan Info",
   "Logged in as": "Logged in as",
   "Login": "Login",
   "Logout": "Logout",
@@ -14,5 +14,5 @@
   "Remember me": "Remember me",
   "Version": "Version",
   "Create Loan": "Create Loan",
-  "Search Loan": "Search Loan"
+  "Search Loan": "Loan Info"
 }
