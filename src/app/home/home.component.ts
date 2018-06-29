@@ -46,18 +46,9 @@ export class HomeComponent implements OnInit {
     let url = window.location.toString();
     if (url.indexOf('?event=signing_complete')) {
       this.submitEsign();
+      return;
     }
-    this.quoteService.getLoanDetails({loanId: LOAN_ID, emailId: '' })
-    .pipe(finalize(() => { this.isLoading = false; }))
-    .subscribe((response: any) => {
-      this.setLoanDetails(response.loanDetails);
-    });
-    console.log("im here..",this.authenticationService.credentials.username);
-    this.quoteService.getActionItems({loanId: LOAN_ID , emailId: this.authenticationService.credentials.username})
-    .pipe(finalize(() => { this.isLoading = false; }))
-    .subscribe((response: any) => {
-      this.setLoanActionItems(response.loanActionItems);
-    });
+    this.getLoanDetails();
   }
 
   onSubmit(loanDetails: any) {
@@ -160,11 +151,16 @@ export class HomeComponent implements OnInit {
     if (loanId && documentId && attachmentId) {
       this.quoteService.submitESign({ loanId, documentId, attachmentId }).subscribe(url => {
         console.log(url);
-        this.isLoading = false;
+        // this.isLoading = false;
 
         localStorage.removeItem('loanId');
         localStorage.removeItem('documentId');
         localStorage.removeItem('attachmentId');
+
+        this.isLoading = true;
+
+        this.getLoanDetails();
+
       });
     }
   }
@@ -178,5 +174,19 @@ export class HomeComponent implements OnInit {
     }
     return false;
 
+  }
+
+  getLoanDetails() {
+    this.quoteService.getLoanDetails({loanId: LOAN_ID, emailId: '' })
+    .pipe(finalize(() => { this.isLoading = false; }))
+    .subscribe((response: any) => {
+      this.setLoanDetails(response.loanDetails);
+    });
+    console.log("im here..",this.authenticationService.credentials.username);
+    this.quoteService.getActionItems({loanId: LOAN_ID , emailId: this.authenticationService.credentials.username})
+    .pipe(finalize(() => { this.isLoading = false; }))
+    .subscribe((response: any) => {
+      this.setLoanActionItems(response.loanActionItems);
+    });
   }
 }
