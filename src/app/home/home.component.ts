@@ -101,30 +101,36 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  eSignDocument() {
+  eSignDocument(documentId:any, attachments:any) {
 
-
-    // let loanId = this.loanDetails.id;
-    // let documentId = this.loanActionItems[4].id;
-    // let attachmentId = this.loanActionItems[4].attachments[0].name;
     // let email = 'divya.gupta@brimmatech.com';
-    const loanId = 'f3236bed-dd2a-4472-8000-55359aa8bd40';
-    const documentId = '0fa69697-bcbb-4ddb-8860-46fbc8bd0e6b';
-    const attachmentId = '0f7f0b9d-f822-48ee-b3b8-dfa02be90d3e';
+    const loanId = LOAN_ID;
 
+    const urlaAttachment = attachments.find((attachment: any) => attachment.title === '1003 - URLA');
+    let attachmentId = urlaAttachment.name;
+    if (!attachmentId) {
+      return;
+    }
+
+    localStorage.setItem('loanId', loanId);
+    localStorage.setItem('documentId', documentId);
+    localStorage.setItem('attachmentId', attachmentId);
+
+    this.isLoading = true;
     this.quoteService.eSignDocument({ loanId, documentId, attachmentId }).subscribe(url => {
       console.log(url);
+      this.isLoading = false;
       window.location.replace(url);
     });
   }
 
   isURLAAttachment(attachments: any) {
-    // to be removed 
+    // to be removed
 
     const urlaAttachment = attachments.find((attachment: any) => attachment.title === '1003 - URLA');
     if (urlaAttachment) {
       return true;
-    } 
+    }
     return false;
 
   }
