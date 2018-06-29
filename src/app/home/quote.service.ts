@@ -57,4 +57,14 @@ export class QuoteService {
       );
   }
 
+  submitESign(context: ESignContext): Observable<string> {
+    return this.httpClient
+      .cache()
+      .put(routes.eSign(context), {})
+      .pipe(
+        map((body: any) => body.viewUrl),
+        catchError(() => of('Could not eSign'))
+      );
+  }
+
 }

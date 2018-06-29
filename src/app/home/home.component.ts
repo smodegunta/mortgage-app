@@ -33,6 +33,10 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     // this.onSubmit();
+    let url = window.location.toString();
+    if (url.indexOf('?event=signing_complete')) {
+      this.submitEsign();
+    }
     this.quoteService.getLoanDetails({loanId: LOAN_ID })
     .pipe(finalize(() => { this.isLoading = false; }))
     .subscribe((response: any) => {
@@ -125,6 +129,25 @@ export class HomeComponent implements OnInit {
       this.isLoading = false;
       window.location.replace(url);
     });
+  }
+
+  submitEsign() {
+    let loanId = localStorage.getItem('loanId');
+    let documentId = localStorage.getItem('documentId');
+    let attachmentId = localStorage.getItem('attachmentId');
+
+    this.isLoading = true;
+
+    if (loanId && documentId && attachmentId) {
+      this.quoteService.submitESign({ loanId, documentId, attachmentId }).subscribe(url => {
+        console.log(url);
+        this.isLoading = false;
+
+        localStorage.removeItem('loanId');
+        localStorage.removeItem('documentId');
+        localStorage.removeItem('attachmentId');
+      });
+    }
   }
 
   isURLAAttachment(attachments: any) {
