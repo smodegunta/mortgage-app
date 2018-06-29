@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
     this.isLoading = true;
     // this.onSubmit();
     let url = window.location.toString();
-    if (url.indexOf('?event=signing_complete')) {
+    if (url.indexOf('?event=signing_complete') > 0) {
       this.submitEsign();
       return;
     }
