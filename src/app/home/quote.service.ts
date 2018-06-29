@@ -5,12 +5,23 @@ import { map, catchError } from 'rxjs/operators';
 
 const routes = {
   loanDetails: (c: LoanContext) =>
-  `borrower/loan/${c.loanId}`
+  `borrower/loan/${c.loanId}`,
+
+  actionItems: (c: LoanContext) =>
+  `borrower/loan/${c.loanId}/actionItems`,
+
+  eSign: (c: ESignContext) =>
+  `borrower/loan/${c.loanId}/actionSign/${c.documentId}/attachments/${c.attachmentId}`
 };
 
 export interface LoanContext {
   // The quote's category: 'dev', 'explicit'...
   loanId: string;
+}
+export interface ESignContext {
+  loanId: string;
+  documentId: string;
+  attachmentId: string;
 }
 
 @Injectable()
@@ -20,11 +31,29 @@ export class QuoteService {
 
   getLoanDetails(context: LoanContext): Observable<string> {
     return this.httpClient
-      .cache()
       .get(routes.loanDetails(context))
       .pipe(
-        map((body: any) => body.value),
+        map((body: any) => body),
         catchError(() => of('Error, could not load joke :-('))
+      );
+  }
+
+  getActionItems(context: LoanContext): Observable<string> {
+    return this.httpClient
+      .get(routes.actionItems(context))
+      .pipe(
+        map((body: any) => body),
+        catchError(() => of('Error, could not load joke :-('))
+      );
+  }
+
+  eSignDocument(context: ESignContext): Observable<string> {
+    return this.httpClient
+      .cache()
+      .get(routes.eSign(context))
+      .pipe(
+        map((body: any) => body.viewUrl),
+        catchError(() => of('Could not eSign'))
       );
   }
 

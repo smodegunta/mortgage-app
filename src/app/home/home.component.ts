@@ -13,7 +13,8 @@ export class Tile {
   text: any = {value: '', label: ''};
 }
 
-const LOAN_UPLOAD = 'http://573ce40c.ngrok.io/borrower/loan/document/uploadLoanDocument';
+const LOAN_ID = '40e0e412-54b8-4111-8e42-144b14db70d5';
+const LOAN_UPLOAD = '';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -30,94 +31,39 @@ export class HomeComponent implements OnInit {
   constructor(private quoteService: QuoteService, public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.isLoading = false;
-    // this.onSubmit();
-    this.quoteService.getLoanDetails({loanId: '9a06733f-b10c-4d45-9970-a481763cbb6c' }).subscribe(response => {
-      console.log(response);
-    });
-    // this.quoteService.getLoanDetails({ )
-    //   .pipe(finalize(() => { this.isLoading = false; }))
-    //   .subscribe((response: any) => { console.log(response); });
-  }
-
-  onSubmit() {
     this.isLoading = true;
-    setTimeout(() => {
-      this.isLoading = false;
-      this.setLoanActionItems();
-      this.setLoanDetails();
-      this.setLoanTiles();
-    }, 200);
+    // this.onSubmit();
+    this.quoteService.getLoanDetails({loanId: LOAN_ID })
+    .pipe(finalize(() => { this.isLoading = false; }))
+    .subscribe((response: any) => {
+      this.setLoanDetails(response.loanDetails);
+    });
+
+    this.quoteService.getActionItems({loanId: LOAN_ID })
+    .pipe(finalize(() => { this.isLoading = false; }))
+    .subscribe((response: any) => {
+      this.setLoanActionItems(response.loanActionItems);
+    });
   }
 
-  setLoanActionItems() {
-    this.loanActionItems = [
-      {
-        'id': '0fa69697-bcbb-4ddb-8860-46fbc8bd0e6b',
-        'documentType': 'Standard Form',
-        'category': '1003 - URLA',
-        'description': '',
-        'issuedDate': '2018-06-24T21:55:52+05:30',
-        'attachments': [],
-        'borrower': {
-          'firstName': 'John',
-          'lastName': 'Homeowner',
-          'id': '_borrower1'
-        },
-        'coBorrower': {
-          'firstName': 'Mary',
-          'lastName': 'Homeowner',
-          'id': '_coborrower1'
-        }
-      },
-      {
-        'id': '73ada9aa-d895-4c02-87ff-e2a5b496d4ae',
-        'category': 'Bank Statements',
-        'description': '',
-        'issuedDate': '2018-06-24T21:55:52+05:30',
-        'documentType': 'Needed',
-        'attachments': [
-          {
-            'title': 'Untitled',
-            'name': 'Attachment-50ee7fa0-b738-4826-8e92-d8219ce33bab.txt',
-            'date': '2018-06-24T22:08:52+05:30'
-          }
-        ],
-        'borrower': {
-          'firstName': 'John',
-          'lastName': 'Homeowner',
-          'id': '_borrower1'
-        },
-        'coBorrower': {
-          'firstName': 'Mary',
-          'lastName': 'Homeowner',
-          'id': '_coborrower1'
-        }
-      }
-    ];
+  onSubmit(loanDetails: any) {
+    // this.isLoading = true;
+    // setTimeout(() => {
+    //   this.isLoading = false;
+    //   this.setLoanActionItems();
+    //   this.setLoanDetails();
+    //   this.setLoanTiles();
+    // }, 200);
   }
 
-  setLoanDetails() {
-    this.loanDetails = {
-        'id': '{c97cdf14-07f3-48dd-abb9-7b5e59817e58}',
-        'borrower': {
-          'firstName': 'John',
-          'lastName': 'Homeowner',
-          'address': '175 13th Street',
-          'city': 'Washington',
-          'state': 'DC',
-          'zip': '20013'
-        },
-        'summary': {
-          'loanNumber': 'TEST180600031',
-          'loanAmount': 156350,
-          'interestRate': 4.875,
-          'loanPurpose': 'Purchase',
-          'loanTerm': 360,
-          'lockDate': '2018-06-02T21:55:52+05:30',
-          'lockExpirationDate': '2018-06-24T21:55:52+05:30',
-        }
-      };
+  setLoanActionItems(loanActionItems: any) {
+    this.loanActionItems = loanActionItems;
+  }
+
+  setLoanDetails(loanDetails: any) {
+    this.loanDetails = loanDetails;
+    console.log(this.loanDetails);
+    this.setLoanTiles();
   }
 
   setLoanTiles() {
@@ -153,5 +99,33 @@ export class HomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
     });
+  }
+
+  eSignDocument() {
+
+
+    // let loanId = this.loanDetails.id;
+    // let documentId = this.loanActionItems[4].id;
+    // let attachmentId = this.loanActionItems[4].attachments[0].name;
+    // let email = 'divya.gupta@brimmatech.com';
+    const loanId = 'f3236bed-dd2a-4472-8000-55359aa8bd40';
+    const documentId = '0fa69697-bcbb-4ddb-8860-46fbc8bd0e6b';
+    const attachmentId = '0f7f0b9d-f822-48ee-b3b8-dfa02be90d3e';
+
+    this.quoteService.eSignDocument({ loanId, documentId, attachmentId }).subscribe(url => {
+      console.log(url);
+      window.location.replace(url);
+    });
+  }
+
+  isURLAAttachment(attachments: any) {
+    // to be removed 
+
+    const urlaAttachment = attachments.find((attachment: any) => attachment.title === '1003 - URLA');
+    if (urlaAttachment) {
+      return true;
+    } 
+    return false;
+
   }
 }
