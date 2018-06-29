@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 
 import { QuoteService } from './quote.service';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { EncompassUploadDialogComponent } from '../encompass-upload-dialog/encompass-upload-dialog.component';
 
 
@@ -10,11 +10,19 @@ export class Tile {
   color: string;
   cols: number;
   rows: number;
-  text: any = {value: '', label: ''};
+  text: any = { value: '', label: '' };
 }
 
 const LOAN_ID = '40e0e412-54b8-4111-8e42-144b14db70d5';
-const LOAN_UPLOAD = '';
+const LOAN_UPLOAD = 'http://e1fa8a70.ngrok.io/borrower/loan/document/uploadLoanDocument';
+const formData = {
+  'loanNumber': '9a06733f-b10c-4d45-9970-a481763cbb6c',
+  'document': {
+    'fileName': 'CKs & Marlboro LL Clinic 2017 (1).pdf',
+    'documentLocator': 'DEV/1j9gRwgMQ9yOQak4lFg2_CKs & Marlboro LL Clinic 2017 (1).pdf'
+  },
+  'documentDescription': 'Bank Statements'
+};
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -33,17 +41,17 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     // this.onSubmit();
-    this.quoteService.getLoanDetails({loanId: LOAN_ID })
-    .pipe(finalize(() => { this.isLoading = false; }))
-    .subscribe((response: any) => {
-      this.setLoanDetails(response.loanDetails);
-    });
+    this.quoteService.getLoanDetails({ loanId: LOAN_ID })
+      .pipe(finalize(() => { this.isLoading = false; }))
+      .subscribe((response: any) => {
+        this.setLoanDetails(response.loanDetails);
+      });
 
-    this.quoteService.getActionItems({loanId: LOAN_ID })
-    .pipe(finalize(() => { this.isLoading = false; }))
-    .subscribe((response: any) => {
-      this.setLoanActionItems(response.loanActionItems);
-    });
+    this.quoteService.getActionItems({ loanId: LOAN_ID })
+      .pipe(finalize(() => { this.isLoading = false; }))
+      .subscribe((response: any) => {
+        this.setLoanActionItems(response.loanActionItems);
+      });
   }
 
   onSubmit(loanDetails: any) {
@@ -73,26 +81,37 @@ export class HomeComponent implements OnInit {
 
   getSummaryTiles(summary: any) {
     const summaryTiles: Tile[] = [
-      { text: { value: summary.loanNumber, label: 'Loan Number', type: 'string'}, cols: 1, rows: 1, color: '#F8F8F8' },
+      { text: { value: summary.loanNumber, label: 'Loan Number', type: 'string' }, cols: 1, rows: 1, color: '#F8F8F8' },
       { text: { value: summary.loanAmount, label: 'Loan Amount' }, cols: 1, rows: 1, color: '#F8F8F8' },
-      { text: { value: summary.interestRate, label: 'Intrest Rate'}, cols: 1, rows: 1, color: '#F8F8F8' },
-      { text: { value: summary.loanPurpose, label: 'Loan Purpose'}, cols: 1, rows: 1, color: '#F8F8F8' },
-      { text: { value: summary.loanTerm, label: 'Loan Term'}, cols: 1, rows: 1, color: '#F8F8F8' },
-      { text: { value: summary.loanAmount, label: 'Loan Amount'}, cols: 1, rows: 1, color: '#F8F8F8' },
-      { text: { value: summary.lockDate, label: 'Lock Date', type: 'date'}, cols: 1, rows: 1, color: '#F8F8F8' },
-      { text: { value: summary.lockExpirationDate, label: 'Loan Expiration Date', type: 'date'},
-       cols: 1, rows: 1, color: '#F8F8F8' }
+      { text: { value: summary.interestRate, label: 'Intrest Rate' }, cols: 1, rows: 1, color: '#F8F8F8' },
+      { text: { value: summary.loanPurpose, label: 'Loan Purpose' }, cols: 1, rows: 1, color: '#F8F8F8' },
+      { text: { value: summary.loanTerm, label: 'Loan Term' }, cols: 1, rows: 1, color: '#F8F8F8' },
+      { text: { value: summary.loanAmount, label: 'Loan Amount' }, cols: 1, rows: 1, color: '#F8F8F8' },
+      { text: { value: summary.lockDate, label: 'Lock Date', type: 'date' }, cols: 1, rows: 1, color: '#F8F8F8' },
+      {
+        text: { value: summary.lockExpirationDate, label: 'Loan Expiration Date', type: 'date' },
+        cols: 1, rows: 1, color: '#F8F8F8'
+      }
 
     ];
     return summaryTiles;
   }
 
   openDialog(file: string): void {
+    const formObject = formData;
     const dialogRef = this.dialog.open(EncompassUploadDialogComponent, {
       width: '750px',
       data: {
         placeholder: file,
-        api: LOAN_UPLOAD
+        api: LOAN_UPLOAD,
+        formData: {
+          'loanNumber': '9a06733f-b10c-4d45-9970-a481763cbb6c',
+          'document': {
+            'fileName': 'CKs & Marlboro LL Clinic 2017 (1).pdf',
+            'documentLocator': 'DEV/1j9gRwgMQ9yOQak4lFg2_CKs & Marlboro LL Clinic 2017 (1).pdf'
+          },
+          'documentDescription': 'Bank Statements'
+        }
       }
     });
 
@@ -119,12 +138,12 @@ export class HomeComponent implements OnInit {
   }
 
   isURLAAttachment(attachments: any) {
-    // to be removed 
+    // to be removed
 
     const urlaAttachment = attachments.find((attachment: any) => attachment.title === '1003 - URLA');
     if (urlaAttachment) {
       return true;
-    } 
+    }
     return false;
 
   }

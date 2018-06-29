@@ -24,10 +24,13 @@ export class EncompassUploadComponent implements OnInit {
   hasBaseDropZoneOver: boolean;
   hasAnotherDropZoneOver: boolean;
   response: string;
+  status: string;
   // tslint:disable-next-line:no-input-rename
   @Input('placeholder') placeholder: string;
   // tslint:disable-next-line:no-input-rename
   @Input('api') api: string;
+  // tslint:disable-next-line:no-input-rename
+  @Input('formData') data: any;
 
   constructor () {
   }
@@ -36,18 +39,15 @@ export class EncompassUploadComponent implements OnInit {
   ngOnInit() {
     console.log('api', this.api);
     console.log('api', this.placeholder);
-    const data = {
-      'documentLocator': 'DEV/1j9gRwgMQ9yOQak4lFg2_CKs & Marlboro LL Clinic 2017 (1).pdf'
-     };
+    console.log(this.data);
     this.uploader = new FileUploader({
-      url: 'http://e1fa8a70.ngrok.io/borrower/loan/submitLoan',
+      url: this.api,
       method: 'POST',
       parametersBeforeFiles: true,
       additionalParameter: {
-        data: JSON.stringify(data)
-      }
+        data: JSON.stringify(this.data)
+      },
     });
-
 
     this.hasBaseDropZoneOver = false;
     this.hasAnotherDropZoneOver = false;
@@ -56,8 +56,8 @@ export class EncompassUploadComponent implements OnInit {
 
     this.uploader.response.subscribe( (res: any) => {
       this.response = res;
-    } );
-   }
+    });
+  }
 
   public fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;
