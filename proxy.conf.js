@@ -12,7 +12,7 @@ const proxyConfig = [
   {
     context: '/api',
     pathRewrite: { '^/api': '' },
-    target: 'http://e1fa8a70.ngrok.io/',
+    target: 'http://localhost:9099',
     changeOrigin: true,
     secure: false
   }

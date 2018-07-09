@@ -15,6 +15,7 @@ import { LoginModule } from './login/login.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { EncompassUploadModule} from './encompass-upload/encompass-upload.module';
+import { DocumentsModule } from './documents/documents.module';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { EncompassUploadModule} from './encompass-upload/encompass-upload.module
     HomeModule,
     LoginModule,
     AppRoutingModule,
-    EncompassUploadModule
+    EncompassUploadModule,
+    DocumentsModule
   ],
   declarations: [AppComponent],
   providers: [

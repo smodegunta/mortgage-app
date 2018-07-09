@@ -8,7 +8,7 @@ import { SharedModule } from '@app/shared';
 import { MaterialModule } from '@app/material.module';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
-import { QuoteService } from './quote.service';
+import { QuoteService } from '@app/providers/quote.service';
 import { EncompassUploadDialogModule } from '../encompass-upload-dialog/encompass-upload-dialog.module';
 import { EncompassUploadDialogComponent } from '../encompass-upload-dialog/encompass-upload-dialog.component';
 
