@@ -1,0 +1,69 @@
+<mat-accordion>
+
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      eSign Documents
+    </mat-expansion-panel-header>
+    <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
+    <mat-grid-list cols="2">
+        <mat-grid-tile>
+          <mat-list>
+            <ng-container *ngFor="let document of documents">
+              <mat-list-item *ngIf="document.signType=='eSignable'">
+                <span >{{ document.category }} ({{ document.type }})</span>
+              </mat-list-item>
+            </ng-container>
+          </mat-list>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <ng-container *ngIf="!eSigned">
+            <button [disabled]="!isESignAPIReady" mat-raised-button color="primary" (click)="redirectToDocuSign();">eSign</button>
+          </ng-container>
+          <span *ngIf="eSigned">Signed</span>
+        </mat-grid-tile>
+      </mat-grid-list>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      Wet Sign Components
+    </mat-expansion-panel-header>
+
+    <mat-grid-list cols="2">
+      <mat-grid-tile>
+        <mat-list>
+          <ng-container *ngFor="let document of documents">
+            <mat-list-item *ngIf="document.signType=='Wet Sign Only'">
+              <span >{{ document.category }} ({{ document.type }})</span>
+            </mat-list-item>
+          </ng-container>
+        </mat-list>
+      </mat-grid-tile>
+      <mat-grid-tile>
+          <button mat-raised-button color="primary">Download</button>
+          <button mat-raised-button color="primary">Upload</button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      Information Documents
+    </mat-expansion-panel-header>
+
+    <mat-grid-list cols="2">
+      <mat-grid-tile>
+        <mat-list>
+          <ng-container *ngFor="let document of documents">
+            <mat-list-item *ngIf="document.signType=='Informational'">
+              <span >{{ document.category }} ({{ document.type }})</span>
+            </mat-list-item>
+          </ng-container>
+        </mat-list>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <button mat-raised-button color="primary">Download</button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-expansion-panel>
+</mat-accordion>

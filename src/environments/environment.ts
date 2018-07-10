@@ -9,7 +9,7 @@ import env from './.env';
 export const environment = {
   production: false,
   version: env.npm_package_version + '-dev',
-  serverUrl: 'http://localhost:9099/',
+  serverUrl: 'http://a80ac839.ngrok.io/',
   defaultLanguage: 'en-US',
   supportedLanguages: [
     'en-US',
