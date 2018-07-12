@@ -1,5 +1,5 @@
-<mat-accordion>
-
+<mat-accordion *ngIf="!eSigned">
+  
   <mat-expansion-panel [expanded]="true">
     <mat-expansion-panel-header>
       eSign Documents
@@ -16,12 +16,9 @@
           </mat-list>
         </mat-grid-tile>
         <mat-grid-tile>
-          <ng-container *ngIf="!eSigned">
-            <button [disabled]="!isESignAPIReady" mat-raised-button color="primary" (click)="redirectToDocuSign();">eSign</button>
-          </ng-container>
-          <span *ngIf="eSigned">Signed</span>
+          <button [disabled]="!isESignAPIReady" mat-raised-button color="primary" (click)="redirectToDocuSign();">eSign</button>
         </mat-grid-tile>
-      </mat-grid-list>
+    </mat-grid-list>
   </mat-expansion-panel>
 
   <mat-expansion-panel>
@@ -67,3 +64,4 @@
     </mat-grid-list>
   </mat-expansion-panel>
 </mat-accordion>
+<mat-card *ngIf="eSigned">Signing Completed</mat-card>
