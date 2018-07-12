@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DocumentsComponent } from './documents.component';
+import { DocumentsComponent } from '@app/documents/documents.component';
 import { MaterialModule } from '@app/material.module';
-import { DocumentsRoutingModule } from './documents-routing.module';
+import { DocumentsRoutingModule } from '@app/documents/documents-routing.module';
 import { SharedModule } from '@app/shared';
 
 @NgModule({

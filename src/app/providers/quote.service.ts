@@ -4,14 +4,17 @@ import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 const routes = {
+  loans: () =>
+  `borrower/loan/listLoans`,
+
   documents: (c: LoanContext) =>
   `borrower/loan/${c.loanId}/documents`,
 
   eSignUrl: (c: LoanContext) =>
   `borrower/loan/${c.loanId}/documents/esignUrl?emailId=${c.emailId}`,
 
-  updateSigned: (c: LoanContext) => 
-  `borrower/loan/${c.loanId}/updateSigned`,
+  updateSigned: () => 
+  `borrower/loan/updateSignedDocs`,
 
   loanDetails: (c: LoanContext) =>
   `borrower/loan/${c.loanId}`,
@@ -60,6 +63,15 @@ export class QuoteService {
       );
   }
 
+  getLoans(): Observable<string> {
+    return this.httpClient
+    .get(routes.loans())
+    .pipe(
+      map((body: any) => body),
+      catchError(() => of('Error, could not load joke :-('))
+    );
+  }
+  
   getESignUrl(context: LoanContext): Observable<string> {
     return this.httpClient
       .get(routes.eSignUrl(context))
@@ -69,9 +81,9 @@ export class QuoteService {
       );
   }
 
-  updateEsignedData(context: LoanContext): Observable<string> {
+  updateEsignedData(): Observable<string> {
     return this.httpClient
-      .post(routes.updateSigned(context), { "test": "test"})
+      .post(routes.updateSigned(), { "test": "test"})
       .pipe(
         map((body: any) => body),
         catchError(() => of('Error, could not load joke :-('))

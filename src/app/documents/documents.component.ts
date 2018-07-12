@@ -6,8 +6,6 @@ import { ActivatedRoute } from '@angular/router';
 
 const URL = 'path_to_api';
 
-const LOAN_ID = '6dec4a53-2013-4e68-a4f3-464edf9ce954';
-
 @Component({
   selector: 'app-documents',
   templateUrl: './documents.component.html',
@@ -17,6 +15,8 @@ export class DocumentsComponent implements OnInit {
   private redirectUrl: string;
 
   private isESignAPIReady: boolean = false;
+  private loanId: any;
+
   public isLoading: boolean = false;
   public eSigned: boolean = false;
   public documents: any;
@@ -25,22 +25,18 @@ export class DocumentsComponent implements OnInit {
 
 
   ngOnInit() {
-    this.route.queryParams
+    this.route.paramMap
       .subscribe(params => {
-        this.eSigned = params.esigned;
-        if (!this.eSigned) this.polleSignAPI();
-        else this.updatedESigned();
-      });
-  }
-  
-  updatedESigned() {
-    this.quoteService.updateEsignedData({loanId: LOAN_ID, emailId: ''})
-    .subscribe(() => {});
+        this.loanId = params.get('loanId');
+        this.polleSignAPI();
+    });
+
+    
   }
   
   getDocuments() {
     this.isLoading = true;
-    this.quoteService.getDocuments({loanId: LOAN_ID, emailId: '' })
+    this.quoteService.getDocuments({loanId: this.loanId, emailId: '' })
     .pipe(finalize(() => { this.isLoading = false; }))
     .subscribe((response: any) => {
       this.documents = response.documents;
@@ -51,12 +47,13 @@ export class DocumentsComponent implements OnInit {
   polleSignAPI() {
     interval(2000)
       .pipe(
-        switchMap(() => this.quoteService.getDocuments({loanId: LOAN_ID, emailId: '' })),
+        switchMap(() => this.quoteService.getDocuments({loanId: this.loanId, emailId: '' })),
         filter((x: any) => x.id),
         take(1),
         map((x) => x)
       ).subscribe((response: any) => { 
         this.isESignAPIReady = true;
+        this.documents = response.documents;
         this.redirectUrl = response.borrower.BorrowerViewUrl; 
       });
 

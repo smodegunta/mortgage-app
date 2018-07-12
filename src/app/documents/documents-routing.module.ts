@@ -7,7 +7,7 @@ import { DocumentsComponent } from '@app/documents/documents.component';
 
 const routes: Routes = [
   // Module is lazy loaded, see app-routing.module.ts
-  { path: '', component: DocumentsComponent, data: { title: extract('Documents') } }
+  { path: '', component: DocumentsComponent, data: { title: extract('Document') } }
 ];
 
 @NgModule({
