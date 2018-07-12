@@ -28,7 +28,7 @@ export class DocumentsComponent implements OnInit {
     this.route.queryParams
       .subscribe(params => {
         this.eSigned = params.esigned;
-        if (!this.eSigned) this.getDocuments();
+        if (!this.eSigned) this.polleSignAPI();
         else this.updatedESigned();
       });
   }
@@ -44,21 +44,20 @@ export class DocumentsComponent implements OnInit {
     .pipe(finalize(() => { this.isLoading = false; }))
     .subscribe((response: any) => {
       this.documents = response.documents;
-      this.polleSignAPI(LOAN_ID, response.borrower.email);
+      // this.polleSignAPI(LOAN_ID, response.borrower.email);
     });
   }
 
-  polleSignAPI(loanId: string, email: string) {
+  polleSignAPI() {
     interval(2000)
       .pipe(
-        switchMap(() => this.quoteService.getESignUrl({loanId: loanId, emailId: email })),
-        filter((x: any) => x.viewUrl),
+        switchMap(() => this.quoteService.getDocuments({loanId: LOAN_ID, emailId: '' })),
+        filter((x: any) => x.id),
         take(1),
         map((x) => x)
       ).subscribe((response: any) => { 
-        console.log(response);
         this.isESignAPIReady = true;
-        this.redirectUrl = response.viewUrl; 
+        this.redirectUrl = response.borrower.BorrowerViewUrl; 
       });
 
   }
