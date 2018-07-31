@@ -10,8 +10,8 @@ const routes = {
   documents: (c: LoanContext) =>
   `borrower/loan/${c.loanId}/documents`,
 
-  eSignUrl: (c: LoanContext) =>
-  `borrower/loan/${c.loanId}/documents/esignUrl?emailId=${c.emailId}`,
+  eSignUrl: (c: ESignUrlContext) =>
+  `borrower/loan/${c.loanId}/documents/esignUrl?emailId=${c.emailId}&name=${c.name}`,
 
   updateSigned: () => 
   `borrower/loan/updateSignedDocs`,
@@ -33,6 +33,11 @@ export interface LoanContext {
   // The quote's category: 'dev', 'explicit'...
   loanId: string;
   emailId: string;
+}
+export interface ESignUrlContext {
+  loanId: string;
+  emailId: string;
+  name: string;
 }
 export interface ESignContext {
   loanId: string;
@@ -72,7 +77,7 @@ export class QuoteService {
     );
   }
   
-  getESignUrl(context: LoanContext): Observable<string> {
+  getESignUrl(context: ESignUrlContext): Observable<string> {
     return this.httpClient
       .get(routes.eSignUrl(context))
       .pipe(

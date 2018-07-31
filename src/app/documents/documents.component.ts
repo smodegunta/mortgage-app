@@ -54,13 +54,21 @@ export class DocumentsComponent implements OnInit {
       ).subscribe((response: any) => { 
         this.isESignAPIReady = true;
         this.documents = response.documents;
-        this.redirectUrl = response.borrower.BorrowerViewUrl; 
       });
-
   }
 
 
-  redirectToDocuSign() {
-    window.location.href = this.redirectUrl;
+  redirectToDocuSign(borrowerType: String) {
+    if (borrowerType == 'borrower') {
+      this.quoteService.getESignUrl({loanId: this.loanId, emailId: 'kirupakaranh@gmail.com', name: 'Kirupakaran' })
+      .subscribe((response: any) => {
+        window.location.href = response.viewUrl;
+      });
+    } else if (borrowerType == 'coborrower') {
+      this.quoteService.getESignUrl({loanId: this.loanId, emailId: 'kirupakaranh@gmail.com', name: 'Srikanth' })
+      .subscribe((response: any) => {
+        window.location.href = response.viewUrl;
+      });
+    }
   }
 }
