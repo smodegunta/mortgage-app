@@ -20,6 +20,8 @@ export class DocumentsComponent implements OnInit {
   public isLoading: boolean = false;
   public eSigned: boolean = false;
   public documents: any;
+  public coborrower: boolean = false;
+  private response: any;
 
   constructor (private quoteService: QuoteService, private route: ActivatedRoute) {}
 
@@ -53,6 +55,11 @@ export class DocumentsComponent implements OnInit {
         map((x) => x)
       ).subscribe((response: any) => { 
         this.isESignAPIReady = true;
+        this.response = response;
+
+        if (response.coborrower) {
+          this.coborrower = true;
+        }
         this.documents = response.documents;
       });
   }
@@ -60,12 +67,12 @@ export class DocumentsComponent implements OnInit {
 
   redirectToDocuSign(borrowerType: String) {
     if (borrowerType == 'borrower') {
-      this.quoteService.getESignUrl({loanId: this.loanId, emailId: 'kirupakaranh@gmail.com', name: 'Kirupakaran' })
+      this.quoteService.getESignUrl({loanId: this.loanId, emailId: this.response.borrower.email, name: this.response.borrower.name })
       .subscribe((response: any) => {
         window.location.href = response.viewUrl;
       });
     } else if (borrowerType == 'coborrower') {
-      this.quoteService.getESignUrl({loanId: this.loanId, emailId: 'kirupakaranh@gmail.com', name: 'Srikanth' })
+      this.quoteService.getESignUrl({loanId: this.loanId, emailId: this.response.borrower.email, name: this.response.borrower.name })
       .subscribe((response: any) => {
         window.location.href = response.viewUrl;
       });
