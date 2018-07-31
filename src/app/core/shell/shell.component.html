@@ -42,6 +42,11 @@
             <span translate>Search Loan</span>
           </a>
           <mat-divider></mat-divider>
+
+          <a mat-list-item routerLink="/loans" routerLinkActive="active" (click)="isMobile && sidenav.close()">
+            <span translate>Loans</span>
+          </a>
+          <mat-divider></mat-divider>
         </mat-list>
       </nav>
     </mat-sidenav>

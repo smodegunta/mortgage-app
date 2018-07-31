@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 
-import { QuoteService } from './quote.service';
+import { QuoteService } from '@app/providers/quote.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { EncompassUploadDialogComponent } from '../encompass-upload-dialog/encompass-upload-dialog.component';
+import { EncompassUploadDialogComponent } from '@app/encompass-upload-dialog/encompass-upload-dialog.component';
 import { AuthenticationService } from '@app/core';
 
 
