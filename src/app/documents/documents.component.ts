@@ -21,6 +21,8 @@ export class DocumentsComponent implements OnInit {
   public eSigned: boolean = false;
   public documents: any;
   public coborrower: boolean = false;
+  public borrowerESigned: boolean = false;
+  public coborrowerESigned: boolean = false;
   private response: any;
 
   constructor (private quoteService: QuoteService, private route: ActivatedRoute) {}
@@ -58,8 +60,11 @@ export class DocumentsComponent implements OnInit {
         this.response = response;
 
         if (response.coborrower) {
+          if (response.coborrower.signed) this.coborrowerESigned = true;
           this.coborrower = true;
         }
+        if (response.borrower.signed) this.borrowerESigned = true
+        
         this.documents = response.documents;
       });
   }

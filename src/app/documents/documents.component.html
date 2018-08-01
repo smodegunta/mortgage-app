@@ -19,10 +19,20 @@
         <mat-grid-tile>
           <mat-list>
             <mat-list-item>
-              <button mat-raised-button color="primary" (click)="redirectToDocuSign('borrower');">Borrower eSign</button>
+              <ng-container *ngIf="!borrowerESigned">
+                <button mat-raised-button color="primary" (click)="redirectToDocuSign('borrower');">Borrower eSign</button>
+              </ng-container>
+              <ng-container *ngIf="borrowerESigned">
+                <span>Borrower eSigned</span>
+              </ng-container>
             </mat-list-item>
             <mat-list-item *ngIf="coborrower">
-              <button mat-raised-button color="primary" (click)="redirectToDocuSign('coborrower');">CoBorrower eSign</button>
+              <ng-container *ngIf="!coborrowerESigned">
+                <button mat-raised-button color="primary" (click)="redirectToDocuSign('coborrower');">CoBorrower eSign</button>
+              </ng-container>
+              <ng-container *ngIf="coborrowerESigned">
+                <span>CoBorrower eSigned</span>
+              </ng-container>
             </mat-list-item>
           </mat-list>
         </mat-grid-tile>
