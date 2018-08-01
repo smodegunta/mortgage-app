@@ -26,15 +26,10 @@ export class DocumentsListComponent implements OnInit {
         if (!this.eSigned) this.getLoans();
         else {
           this.eSigned = params.esigned;
-          this.updatedESigned();
         }
       });
   }
   
-  updatedESigned() {
-    this.quoteService.updateEsignedData()
-    .subscribe(() => {});
-  }
 
   getLoans() {
     this.isLoading = true;
