@@ -77,7 +77,7 @@ export class DocumentsComponent implements OnInit {
         window.location.href = response.viewUrl;
       });
     } else if (borrowerType == 'coborrower') {
-      this.quoteService.getESignUrl({loanId: this.loanId, emailId: this.response.borrower.email, name: this.response.borrower.name })
+      this.quoteService.getESignUrl({loanId: this.loanId, emailId: this.response.coborrower.email, name: this.response.coborrower.name })
       .subscribe((response: any) => {
         window.location.href = response.viewUrl;
       });
