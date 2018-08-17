@@ -59,9 +59,10 @@ export class DocumentsComponent implements OnInit {
         this.isESignAPIReady = true;
         this.response = response;
 
-        if (response.coborrower) {
+        if (response.coborrower && response.coborrower.name != "") {
           if (response.coborrower.signed) this.coborrowerESigned = true;
           this.coborrower = true;
+
         }
         if (response.borrower.signed) this.borrowerESigned = true
         
