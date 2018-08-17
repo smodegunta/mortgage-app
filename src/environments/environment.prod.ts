@@ -4,7 +4,7 @@ import env from '@env/.env';
 export const environment = {
   production: true,
   version: env.npm_package_version,
-  serverUrl: 'http://222a2723.ngrok.io/',
+  serverUrl: 'http://localhost:9099/',
   defaultLanguage: 'en-US',
   supportedLanguages: [
     'en-US',
