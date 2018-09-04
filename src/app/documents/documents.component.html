@@ -10,8 +10,8 @@
         <mat-grid-tile>
           <mat-list>
             <ng-container *ngFor="let document of documents">
-              <mat-list-item *ngIf="document.signType=='eSignable'">
-                <span >{{ document.category }} ({{ document.type }})</span>
+              <mat-list-item *ngIf="document.signatureType=='eSignable'">
+                <span >{{ document.title }} ({{ document.documentType }})</span>
               </mat-list-item>
             </ng-container>
           </mat-list>
@@ -19,18 +19,18 @@
         <mat-grid-tile>
           <mat-list>
             <mat-list-item>
-              <ng-container *ngIf="!borrowerESigned">
-                <button mat-raised-button color="primary" (click)="redirectToDocuSign('borrower');">Borrower eSign</button>
+              <ng-container *ngIf="borrower && !borrower.signed">
+                <button mat-raised-button color="primary" (click)="redirectToDocuSign(borrower);">Borrower eSign</button>
               </ng-container>
-              <ng-container *ngIf="borrowerESigned">
+              <ng-container *ngIf="borrower && borrower.signed">
                 <span>Borrower eSigned</span>
               </ng-container>
             </mat-list-item>
-            <mat-list-item *ngIf="coborrower">
-              <ng-container *ngIf="!coborrowerESigned">
-                <button mat-raised-button color="primary" (click)="redirectToDocuSign('coborrower');">CoBorrower eSign</button>
+            <mat-list-item *ngIf="coBorrower">
+              <ng-container *ngIf="!coBorrower.signed">
+                <button mat-raised-button color="primary" (click)="redirectToDocuSign(coBorrower);">CoBorrower eSign</button>
               </ng-container>
-              <ng-container *ngIf="coborrowerESigned">
+              <ng-container *ngIf="coBorrower.signed">
                 <span>CoBorrower eSigned</span>
               </ng-container>
             </mat-list-item>
@@ -48,8 +48,8 @@
       <mat-grid-tile>
         <mat-list>
           <ng-container *ngFor="let document of documents">
-            <mat-list-item *ngIf="document.signType=='Wet Sign Only'">
-              <span >{{ document.category }} ({{ document.type }})</span>
+            <mat-list-item *ngIf="document.signatureType=='Wet Sign Only'">
+              <span >{{ document.title }} ({{ document.documentType }})</span>
             </mat-list-item>
           </ng-container>
         </mat-list>
@@ -70,8 +70,8 @@
       <mat-grid-tile>
         <mat-list>
           <ng-container *ngFor="let document of documents">
-            <mat-list-item *ngIf="document.signType=='Informational'">
-              <span >{{ document.category }} ({{ document.type }})</span>
+            <mat-list-item *ngIf="document.signatureType=='Informational'">
+              <span >{{ document.title }} ({{ document.documentType }})</span>
             </mat-list-item>
           </ng-container>
         </mat-list>

@@ -9,7 +9,8 @@ import env from '@env/.env';
 export const environment = {
   production: false,
   version: env.npm_package_version + '-dev',
-  serverUrl: 'https://dev-1.brimmatech.com/api/',
+  // serverUrl: 'https://dev-1.brimmatech.com/api/',
+  serverUrl: 'http://localhost:9099/',
   defaultLanguage: 'en-US',
   supportedLanguages: [
     'en-US',

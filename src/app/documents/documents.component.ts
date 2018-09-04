@@ -20,10 +20,13 @@ export class DocumentsComponent implements OnInit {
   public isLoading: boolean = false;
   public eSigned: boolean = false;
   public documents: any;
-  public coborrower: boolean = false;
-  public borrowerESigned: boolean = false;
-  public coborrowerESigned: boolean = false;
+  // public coborrower: boolean = false;
+  // public borrowerESigned: boolean = false;
+  // public coborrowerESigned: boolean = false;
   private response: any;
+
+  public borrower: any;
+  public coBorrower: any;
 
   constructor (private quoteService: QuoteService, private route: ActivatedRoute) {}
 
@@ -58,30 +61,20 @@ export class DocumentsComponent implements OnInit {
       ).subscribe((response: any) => { 
         this.isESignAPIReady = true;
         this.response = response;
-
-        if (response.coborrower && response.coborrower.name != "") {
-          if (response.coborrower.signed) this.coborrowerESigned = true;
-          this.coborrower = true;
-
+        for(let element of response.borrowers) {
+          if(element['type'] == "CoBorrower") this.coBorrower = element;
+          else if(element['type'] == "Borrower") this.borrower = element;
         }
-        if (response.borrower.signed) this.borrowerESigned = true
         
         this.documents = response.documents;
       });
   }
 
 
-  redirectToDocuSign(borrowerType: String) {
-    if (borrowerType == 'borrower') {
-      this.quoteService.getESignUrl({loanId: this.loanId, emailId: this.response.borrower.email, name: this.response.borrower.name })
+  redirectToDocuSign(borrower: String) {
+      this.quoteService.getESignUrl({loanId: this.loanId, emailId: borrower['email'], name: borrower['name'] })
       .subscribe((response: any) => {
         window.location.href = response.viewUrl;
       });
-    } else if (borrowerType == 'coborrower') {
-      this.quoteService.getESignUrl({loanId: this.loanId, emailId: this.response.coborrower.email, name: this.response.coborrower.name })
-      .subscribe((response: any) => {
-        window.location.href = response.viewUrl;
-      });
-    }
   }
 }
