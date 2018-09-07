@@ -10,8 +10,8 @@ const routes = {
   documents: (c: LoanContext) =>
   `borrower/loan/${c.loanId}/documents`,
 
-  eSignUrl: (c: ESignUrlContext) =>
-  `borrower/loan/${c.loanId}/documents/esignUrl?emailId=${c.emailId}&name=${c.name}`,
+  eSignUrl: () =>
+  `borrower/loan/generateEsignURL`,
 
   updateSigned: () => 
   `borrower/loan/updateSignedDocs`,
@@ -36,8 +36,10 @@ export interface LoanContext {
 }
 export interface ESignUrlContext {
   loanId: string;
-  emailId: string;
-  name: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  envelopId: string;
 }
 export interface ESignContext {
   loanId: string;
@@ -79,7 +81,7 @@ export class QuoteService {
   
   getESignUrl(context: ESignUrlContext): Observable<string> {
     return this.httpClient
-      .get(routes.eSignUrl(context))
+      .post(routes.eSignUrl(), context)
       .pipe(
         map((body: any) => body),
         catchError(() => of('Error, could not load joke :-('))

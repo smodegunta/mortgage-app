@@ -71,8 +71,14 @@ export class DocumentsComponent implements OnInit {
   }
 
 
-  redirectToDocuSign(borrower: String) {
-      this.quoteService.getESignUrl({loanId: this.loanId, emailId: borrower['email'], name: borrower['name'] })
+  redirectToDocuSign(borrower: Object) {
+      this.quoteService.getESignUrl({
+        loanId: this.loanId, 
+        email: borrower['email'], 
+        firstName: borrower['name'].split(' ')[0],
+        lastName: borrower['name'].split(' ')[1],
+        envelopId: ''
+      })
       .subscribe((response: any) => {
         window.location.href = response.viewUrl;
       });

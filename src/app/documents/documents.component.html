@@ -18,11 +18,11 @@
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-list>
-            <mat-list-item>
-              <ng-container *ngIf="borrower && !borrower.signed">
+            <mat-list-item *ngIf="borrower">
+              <ng-container *ngIf="!borrower.signed">
                 <button mat-raised-button color="primary" (click)="redirectToDocuSign(borrower);">Borrower eSign</button>
               </ng-container>
-              <ng-container *ngIf="borrower && borrower.signed">
+              <ng-container *ngIf="borrower.signed">
                 <span>Borrower eSigned</span>
               </ng-container>
             </mat-list-item>
