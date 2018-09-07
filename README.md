@@ -5,6 +5,11 @@ version 5.0.1
 
 # Getting started
 
+NOTE: first set the environment variable before starting the application   
+
+export ESIGN_HANDLER_URL=http://localhost:9099/   
+
+
 1. Go to project folder and install dependencies:
  ```sh
  npm install
