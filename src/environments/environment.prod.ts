@@ -4,8 +4,7 @@ import env from '@env/.env';
 export const environment = {
   production: true,
   version: env.npm_package_version,
-  // serverUrl: 'https://dev-1.brimmatech.com/api/',
-  serverUrl: 'http://localhost:9099/',
+  serverUrl: env.ESIGN_HANDLER_URL,
   defaultLanguage: 'en-US',
   supportedLanguages: [
     'en-US',

@@ -12,7 +12,8 @@ const proxyConfig = [
   {
     context: '/api',
     pathRewrite: { '^/api': '' },
-    target: 'http://localhost:9099',
+    // target: 'http://localhost:9099',
+    target: process.env.ESIGN_HANDLER_URL,
     changeOrigin: true,
     secure: false
   }
