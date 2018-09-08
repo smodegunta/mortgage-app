@@ -1,22 +1,13 @@
-FROM node:8
+FROM nginx:1.13.3-alpine
 
-# Create app directory
-WORKDIR /usr/src/app
+## Remove default nginx website
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
+RUN rm -rf /usr/share/nginx/html/*
 
-RUN npm install --save @angular/cli -g
+## From 'builder' stage copy over the artifacts in dist folder to default nginx public folder
 
-RUN npm install
-# If you are building your code for production
-# RUN npm install --only=production
-# RUN ng build
-# Bundle app source
-COPY . .
+COPY /dist/* /usr/share/nginx/html/
 
-EXPOSE 4200
+EXPOSE 80
 
-CMD [ "npm", "start" ]
+CMD ["nginx", "-g", "daemon off;"]
