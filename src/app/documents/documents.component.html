@@ -1,0 +1,85 @@
+
+<mat-accordion *ngIf="!eSigned">
+  
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      eSign Documents
+    </mat-expansion-panel-header>
+    <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
+    <mat-grid-list cols="2">
+        <mat-grid-tile>
+          <mat-list>
+            <ng-container *ngFor="let document of documents">
+              <mat-list-item *ngIf="document.signatureType=='eSignable'">
+                <span >{{ document.title }} ({{ document.documentType }})</span>
+              </mat-list-item>
+            </ng-container>
+          </mat-list>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-list>
+            <mat-list-item *ngIf="borrower">
+              <ng-container *ngIf="!borrower.signed">
+                <button mat-raised-button color="primary" (click)="redirectToDocuSign(borrower);">Borrower eSign</button>
+              </ng-container>
+              <ng-container *ngIf="borrower.signed">
+                <span>Borrower eSigned</span>
+              </ng-container>
+            </mat-list-item>
+            <mat-list-item *ngIf="coBorrower">
+              <ng-container *ngIf="!coBorrower.signed">
+                <button mat-raised-button color="primary" (click)="redirectToDocuSign(coBorrower);">CoBorrower eSign</button>
+              </ng-container>
+              <ng-container *ngIf="coBorrower.signed">
+                <span>CoBorrower eSigned</span>
+              </ng-container>
+            </mat-list-item>
+          </mat-list>
+        </mat-grid-tile>
+    </mat-grid-list>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      Wet Sign Components
+    </mat-expansion-panel-header>
+
+    <mat-grid-list cols="2">
+      <mat-grid-tile>
+        <mat-list>
+          <ng-container *ngFor="let document of documents">
+            <mat-list-item *ngIf="document.signatureType=='Wet Sign Only'">
+              <span >{{ document.title }} ({{ document.documentType }})</span>
+            </mat-list-item>
+          </ng-container>
+        </mat-list>
+      </mat-grid-tile>
+      <mat-grid-tile>
+          <button mat-raised-button color="primary">Download</button>
+          <button mat-raised-button color="primary">Upload</button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      Information Documents
+    </mat-expansion-panel-header>
+
+    <mat-grid-list cols="2">
+      <mat-grid-tile>
+        <mat-list>
+          <ng-container *ngFor="let document of documents">
+            <mat-list-item *ngIf="document.signatureType=='Informational'">
+              <span >{{ document.title }} ({{ document.documentType }})</span>
+            </mat-list-item>
+          </ng-container>
+        </mat-list>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <button mat-raised-button color="primary">Download</button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-card *ngIf="eSigned">Signing Completed</mat-card>

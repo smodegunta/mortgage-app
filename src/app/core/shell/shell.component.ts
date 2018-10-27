@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ObservableMedia } from '@angular/flex-layout';
 
-import { AuthenticationService } from '../authentication/authentication.service';
-import { I18nService } from '../i18n.service';
+import { AuthenticationService } from '@app/core/authentication/authentication.service';
+import { I18nService } from '@app/core/i18n.service';
 
 @Component({
   selector: 'app-shell',
@@ -27,7 +27,7 @@ export class ShellComponent implements OnInit {
 
   logout() {
     this.authenticationService.logout()
-      .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+      .subscribe(() => this.router.navigate(['loans'], { replaceUrl: true }));
   }
 
   get username(): string | null {

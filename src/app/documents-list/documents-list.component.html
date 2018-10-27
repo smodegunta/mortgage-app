@@ -1,0 +1,6 @@
+<mat-nav-list *ngIf="!eSigned">
+  <a mat-list-item href="loans/{{ loan }}" *ngFor="let loan of loans"> {{ loan }} </a>
+</mat-nav-list>
+<mat-card *ngIf="eSigned">
+  <span>eSign completed</span>
+</mat-card>

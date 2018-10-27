@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { Route, extract } from '@app/core';
-import { HomeComponent } from './home.component';
+import { DocumentsListComponent } from '../documents-list/documents-list.component';
 
 const routes: Routes = [
   Route.withShell([
-    { path: '', redirectTo: '/home', pathMatch: 'full' },
-    { path: 'home', component: HomeComponent, data: { title: extract('Home') } }
+    { path: '', redirectTo: 'loans', pathMatch: 'full' },
+    { path: 'loans', component: DocumentsListComponent, data: { title: extract('Loans') } }
   ])
 ];
 
