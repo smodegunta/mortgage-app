@@ -25,8 +25,10 @@ export class DocumentsComponent implements OnInit {
   // public coborrowerESigned: boolean = false;
   private response: any;
 
-  public borrower: any;
-  public coBorrower: any;
+  // public borrower: any;
+  // public coBorrower: any;
+  // public docType: string;
+  public docsSets: any;
 
   constructor (private quoteService: QuoteService, private route: ActivatedRoute) {}
 
@@ -46,7 +48,8 @@ export class DocumentsComponent implements OnInit {
     this.quoteService.getDocuments({loanId: this.loanId, emailId: '' })
     .pipe(finalize(() => { this.isLoading = false; }))
     .subscribe((response: any) => {
-      this.documents = response.documents;
+      this.docsSets = response.docsSets;
+      console.log(JSON.stringify(response));
       // this.polleSignAPI(LOAN_ID, response.borrower.email);
     });
   }
@@ -61,19 +64,26 @@ export class DocumentsComponent implements OnInit {
       ).subscribe((response: any) => { 
         this.isESignAPIReady = true;
         this.response = response;
-        for(let element of response.borrowers) {
-          if(element['type'] == "CoBorrower") this.coBorrower = element;
-          else if(element['type'] == "Borrower") this.borrower = element;
-        }
+        this.docsSets = response.docsSets;
+        console.log(JSON.stringify(response));
+        // if(response.discType === "Request"){
+        //   this.request = {
+              
+        //   };
+        // }
+        // for(let element of response.borrowers) {
+        //   if(element['type'] == "CoBorrower") this.coBorrower = element;
+        //   else if(element['type'] == "Borrower") this.borrower = element;
+        // }
         
-        this.documents = response.documents;
+        // this.documents = response.documents;
       });
   }
 
 
   redirectToDocuSign(borrower: Object) {
       
-        window.location.href = borrower['handle'];
+        window.location.href = borrower['url'];
       
   }
 }

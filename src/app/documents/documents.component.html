@@ -1,15 +1,14 @@
 
 <mat-accordion *ngIf="!eSigned">
-  
-  <mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel [expanded]="true" *ngFor="let docs of docsSets">
     <mat-expansion-panel-header>
-      eSign Documents
+      {{docs.type}} Documents (esign)
     </mat-expansion-panel-header>
     <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
     <mat-grid-list cols="2">
         <mat-grid-tile>
           <mat-list>
-            <ng-container *ngFor="let document of documents">
+            <ng-container *ngFor="let document of docs.documents">
               <mat-list-item *ngIf="document.signatureType=='eSignable'">
                 <span >{{ document.title }} ({{ document.documentType }})</span>
               </mat-list-item>
@@ -18,20 +17,12 @@
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-list>
-            <mat-list-item *ngIf="borrower">
-              <ng-container *ngIf="!borrower.signed">
-                <button mat-raised-button color="primary" (click)="redirectToDocuSign(borrower);">Borrower eSign</button>
+            <mat-list-item *ngFor="let borrower of docs.signedBorrowers">
+              <ng-container *ngIf="!borrower.esigned">
+                <button mat-raised-button color="primary" (click)="redirectToDocuSign(borrower);">{{borrower.type}} eSign</button>
               </ng-container>
-              <ng-container *ngIf="borrower.signed">
-                <span>Borrower eSigned</span>
-              </ng-container>
-            </mat-list-item>
-            <mat-list-item *ngIf="coBorrower">
-              <ng-container *ngIf="!coBorrower.signed">
-                <button mat-raised-button color="primary" (click)="redirectToDocuSign(coBorrower);">CoBorrower eSign</button>
-              </ng-container>
-              <ng-container *ngIf="coBorrower.signed">
-                <span>CoBorrower eSigned</span>
+              <ng-container *ngIf="borrower.esigned">
+                <span>{{borrower.type}} eSigned</span>
               </ng-container>
             </mat-list-item>
           </mat-list>
