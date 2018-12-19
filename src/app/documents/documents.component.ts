@@ -49,7 +49,6 @@ export class DocumentsComponent implements OnInit {
     .pipe(finalize(() => { this.isLoading = false; }))
     .subscribe((response: any) => {
       this.docsSets = response.docsSets;
-      console.log(JSON.stringify(response));
       // this.polleSignAPI(LOAN_ID, response.borrower.email);
     });
   }
@@ -65,19 +64,15 @@ export class DocumentsComponent implements OnInit {
         this.isESignAPIReady = true;
         this.response = response;
         this.docsSets = response.docsSets;
-        console.log(JSON.stringify(response));
-        // if(response.discType === "Request"){
-        //   this.request = {
-              
-        //   };
-        // }
-        // for(let element of response.borrowers) {
-        //   if(element['type'] == "CoBorrower") this.coBorrower = element;
-        //   else if(element['type'] == "Borrower") this.borrower = element;
-        // }
-        
-        // this.documents = response.documents;
       });
+  }
+
+  filterSignableDocuments(docs: any[]) {
+      return docs.filter(docu => docu.signatureType==="eSignable");
+  }
+
+  signStatus(signers: any[]){
+    return signers.map(signer => signer.eSigned).reduce((ss1, ss2)=>ss1&ss2);
   }
 
 

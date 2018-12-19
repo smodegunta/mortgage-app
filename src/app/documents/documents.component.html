@@ -1,36 +1,27 @@
-
 <mat-accordion *ngIf="!eSigned">
-  <mat-expansion-panel [expanded]="true" *ngFor="let docs of docsSets">
+  <mat-expansion-panel *ngFor="let docs of docsSets" (open)=docSets>
     <mat-expansion-panel-header>
-      {{docs.type}} Documents (esign)
+      <mat-icon mat-list-icon>folder</mat-icon><span style="margin-left: 5px;">{{docs.name}} Documents
+        [{{signStatus(docs.signedBorrowers)?"SIGNED":"NOT SIGNED"}}]</span>
     </mat-expansion-panel-header>
-    <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
-    <mat-grid-list cols="2">
-        <mat-grid-tile>
-          <mat-list>
-            <ng-container *ngFor="let document of docs.documents">
-              <mat-list-item *ngIf="document.signatureType=='eSignable'">
-                <span >{{ document.title }} ({{ document.documentType }})</span>
-              </mat-list-item>
-            </ng-container>
-          </mat-list>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <mat-list>
-            <mat-list-item *ngFor="let borrower of docs.signedBorrowers">
-              <ng-container *ngIf="!borrower.esigned">
-                <button mat-raised-button color="primary" (click)="redirectToDocuSign(borrower);">{{borrower.type}} eSign</button>
-              </ng-container>
-              <ng-container *ngIf="borrower.esigned">
-                <span>{{borrower.type}} eSigned</span>
-              </ng-container>
-            </mat-list-item>
-          </mat-list>
-        </mat-grid-tile>
-    </mat-grid-list>
+    <mat-list>
+      <h3 mat-subheader style="width: 100%;">
+        {{docs.type}}
+        <div style="margin:0 auto;">
+          <span *ngFor="let borrower of docs.signedBorrowers">
+            <button mat-raised-button color="primary" [disabled]="borrower.esigned" (click)="redirectToDocuSign(borrower);">{{borrower.type}}
+              eSign</button>
+          </span>
+        </div>
+      </h3>
+      <mat-list-item *ngFor="let document of filterSignableDocuments(docs.documents)">
+        <mat-icon mat-list-icon>note</mat-icon>
+        <p mat-line> {{ document.title }} ({{ document.documentType }}) </p>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
   </mat-expansion-panel>
-
-  <mat-expansion-panel>
+  <mat-expansion-panel *ngFor="let docs of docsSets">
     <mat-expansion-panel-header>
       Wet Sign Components
     </mat-expansion-panel-header>
@@ -38,16 +29,16 @@
     <mat-grid-list cols="2">
       <mat-grid-tile>
         <mat-list>
-          <ng-container *ngFor="let document of documents">
+          <ng-container *ngFor="let document of docs.documents">
             <mat-list-item *ngIf="document.signatureType=='Wet Sign Only'">
-              <span >{{ document.title }} ({{ document.documentType }})</span>
+              <span>{{ document.title }} ({{ document.documentType }})</span>
             </mat-list-item>
           </ng-container>
         </mat-list>
       </mat-grid-tile>
       <mat-grid-tile>
-          <button mat-raised-button color="primary">Download</button>
-          <button mat-raised-button color="primary">Upload</button>
+        <button mat-raised-button color="primary">Download</button>
+        <button mat-raised-button color="primary">Upload</button>
       </mat-grid-tile>
     </mat-grid-list>
   </mat-expansion-panel>
@@ -62,7 +53,7 @@
         <mat-list>
           <ng-container *ngFor="let document of documents">
             <mat-list-item *ngIf="document.signatureType=='Informational'">
-              <span >{{ document.title }} ({{ document.documentType }})</span>
+              <span>{{ document.title }} ({{ document.documentType }})</span>
             </mat-list-item>
           </ng-container>
         </mat-list>
