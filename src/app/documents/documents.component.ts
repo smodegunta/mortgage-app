@@ -20,14 +20,7 @@ export class DocumentsComponent implements OnInit {
   public isLoading: boolean = false;
   public eSigned: boolean = false;
   public documents: any;
-  // public coborrower: boolean = false;
-  // public borrowerESigned: boolean = false;
-  // public coborrowerESigned: boolean = false;
   private response: any;
-
-  // public borrower: any;
-  // public coBorrower: any;
-  // public docType: string;
   public docsSets: any;
 
   constructor (private quoteService: QuoteService, private route: ActivatedRoute) {}
@@ -72,13 +65,15 @@ export class DocumentsComponent implements OnInit {
   }
 
   signStatus(signers: any[]){
-    return signers.map(signer => signer.eSigned).reduce((ss1, ss2)=>ss1&ss2);
+    let signed = false;
+    signers.forEach((value, index, arr)=>{
+      signed+=value.eSigned;
+    });
+    return signed;
   }
 
 
   redirectToDocuSign(borrower: Object) {
-      
-        window.location.href = borrower['url'];
-      
+    window.location.href = borrower['url'];
   }
 }
