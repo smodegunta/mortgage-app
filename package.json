@@ -2,8 +2,6 @@
   "name": "mortgage-app",
   "version": "1.0.0",
   "private": true,
-  "preserver:dev": "node ./server-api/server.js",
-"server:dev": "ng serve --configuration=dev",
   "scripts": {
     "ng": "ng",
     "build": "npm run env -s && ng build --prod",
