@@ -80,7 +80,7 @@ describe('HttpService', () => {
 
     // Act
     const request = http
-      .cache()
+      // .cache()
       .get('/toto');
 
     // Assert
