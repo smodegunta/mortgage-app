@@ -9,6 +9,8 @@ COPY /default.conf /etc/nginx/conf.d/default.conf
 
 COPY /dist/* /usr/share/nginx/html/
 
+USER 1001
+
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
