@@ -17,6 +17,7 @@
     "generate": "ng generate"
   },
   "dependencies": {
+    "@angular-devkit/build-angular": "^0.12.4",
     "@angular/animations": "^6.0.1",
     "@angular/cdk": "^6.0.1",
     "@angular/common": "^6.0.1",
@@ -41,7 +42,6 @@
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.803.3",
     "@angular/cli": "^6.0.8",
     "@angular/compiler-cli": "^8.2.5",
     "@angular/language-service": "^6.0.1",
@@ -71,6 +71,6 @@
     "stylelint-scss": "~3.1.0",
     "ts-node": "~6.0.3",
     "tslint": "~5.10.0",
-    "typescript": "~2.7.2"
+    "typescript": "^3.6.2"
   }
 }
