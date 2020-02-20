@@ -1,8 +1,0 @@
-FROM gecko8/lite-server
-
-## From 'builder' stage copy over the artifacts in dist folder to default nginx public folder
-
-COPY dist/ /src/
-RUN ls -la /src/*
-WORKDIR /src
-EXPOSE 3000
