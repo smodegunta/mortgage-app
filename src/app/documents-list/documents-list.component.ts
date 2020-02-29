@@ -29,14 +29,14 @@ export class DocumentsListComponent implements OnInit {
         }
       });
   }
-  
+
 
   getLoans() {
     this.isLoading = true;
     this.quoteService.getLoans()
     .pipe(finalize(() => { this.isLoading = false; }))
     .subscribe((response: any) => {
-      this.loans = response.loans;
+      this.loans = response;
     });
   }
 }

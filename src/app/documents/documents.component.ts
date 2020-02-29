@@ -32,18 +32,6 @@ export class DocumentsComponent implements OnInit {
         this.loanId = params.get('loanId');
         this.polleSignAPI();
     });
-
-    
-  }
-  
-  getDocuments() {
-    this.isLoading = true;
-    this.quoteService.getDocuments({loanId: this.loanId, emailId: '' })
-    .pipe(finalize(() => { this.isLoading = false; }))
-    .subscribe((response: any) => {
-      this.docsSets = response.docsSets;
-      // this.polleSignAPI(LOAN_ID, response.borrower.email);
-    });
   }
 
   polleSignAPI() {
@@ -53,10 +41,11 @@ export class DocumentsComponent implements OnInit {
         filter((x: any) => x.id),
         take(1),
         map((x) => x)
-      ).subscribe((response: any) => { 
+      ).subscribe((response: any) => {
         this.isESignAPIReady = true;
         this.response = response;
         this.docsSets = response.docsSets;
+        this.eSigned = this.signStatus(response.docPackageBorrowers);
       });
   }
 
@@ -67,8 +56,9 @@ export class DocumentsComponent implements OnInit {
   signStatus(signers: any[]){
     let signed = false;
     signers.forEach((value, index, arr)=>{
-      signed+=value.eSigned;
+      signed=signed && value.esigned;
     });
+
     return signed;
   }
 
