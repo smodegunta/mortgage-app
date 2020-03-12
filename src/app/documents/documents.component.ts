@@ -22,6 +22,7 @@ export class DocumentsComponent implements OnInit {
   public documents: any;
   private response: any;
   public docsSets: any;
+  public borrowers: any;
 
   constructor (private quoteService: QuoteService, private route: ActivatedRoute) {}
 
@@ -44,6 +45,7 @@ export class DocumentsComponent implements OnInit {
       ).subscribe((response: any) => {
         this.isESignAPIReady = true;
         this.response = response;
+        this.borrowers = response.docPackageBorrowers;
         this.docsSets = response.docsSets;
         this.eSigned = this.signStatus(response.docPackageBorrowers);
       });
@@ -56,7 +58,10 @@ export class DocumentsComponent implements OnInit {
   signStatus(signers: any[]){
     let signed = false;
     signers.forEach((value, index, arr)=>{
-      signed=signed && value.esigned;
+      if(value.type != "Originator") {
+        signed=signed && value.esigned;
+        console.log(signed);
+      }
     });
 
     return signed;

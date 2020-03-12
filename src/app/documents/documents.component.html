@@ -2,14 +2,14 @@
   <mat-expansion-panel *ngFor="let docs of docsSets" (open)=docSets>
     <mat-expansion-panel-header>
       <mat-icon mat-list-icon>folder</mat-icon><span style="margin-left: 5px;">{{docs.name}} Documents
-        [{{signStatus(docs.signedBorrowers)?"SIGNED":"NOT SIGNED"}}]</span>
+        [{{signStatus(borrowers)?"SIGNED":"NOT SIGNED"}}]</span>
     </mat-expansion-panel-header>
     <mat-list>
       <h3 mat-subheader style="width: 100%;">
         {{docs.type}}
         <div style="margin:0 auto;">
-          <span *ngFor="let borrower of docs.signedBorrowers">
-            <button mat-raised-button color="primary" [disabled]="borrower.esigned" (click)="redirectToDocuSign(borrower);">{{borrower.type}}
+          <span *ngFor="let borrower of borrowers">
+            <button *ngIf="borrower.type != 'Originator'" mat-raised-button color="primary" [disabled]="borrower.esigned" (click)="redirectToDocuSign(borrower);">{{borrower.type}}
               eSign</button>
           </span>
         </div>
