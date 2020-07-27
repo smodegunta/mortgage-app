@@ -1,0 +1,100 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+  creationTimestamp: '2020-03-10T06:17:01Z'
+  generation: 5
+  labels:
+    app: tpo-portal
+  name: tpo-portal
+  namespace: esign-handler
+  resourceVersion: '1052680382'
+  selfLink: >-
+    /apis/apps.openshift.io/v1/namespaces/esign-handler/deploymentconfigs/tpo-portal
+  uid: c14d736d-6296-11ea-b61b-12b5519f9b58
+spec:
+  replicas: 1
+  selector:
+    app: tpo-portal
+    deploymentconfig: tpo-portal
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftWebConsole
+      creationTimestamp: null
+      labels:
+        app: tpo-portal
+        deploymentconfig: tpo-portal
+    spec:
+      containers:
+        - image: >-
+            docker-registry.default.svc:5000/esign-handler/tpo-portal@sha256:b261cd6169bb29a5497a9ad821729e651df6949bef4a03816c7ce4e1fde955df
+          imagePullPolicy: Always
+          name: tpo-portal
+          ports:
+            - containerPort: 80
+              protocol: TCP
+            - containerPort: 8080
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - tpo-portal
+        from:
+          kind: ImageStreamTag
+          name: 'tpo-portal:latest'
+          namespace: esign-handler
+        lastTriggeredImage: >-
+          docker-registry.default.svc:5000/esign-handler/tpo-portal@sha256:b261cd6169bb29a5497a9ad821729e651df6949bef4a03816c7ce4e1fde955df
+      type: ImageChange
+status:
+  availableReplicas: 1
+  conditions:
+    - lastTransitionTime: '2020-04-03T05:09:11Z'
+      lastUpdateTime: '2020-04-03T05:09:14Z'
+      message: replication controller "tpo-portal-4" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: 'True'
+      type: Progressing
+    - lastTransitionTime: '2020-06-12T09:31:18Z'
+      lastUpdateTime: '2020-06-12T09:31:18Z'
+      message: Deployment config has minimum availability.
+      status: 'True'
+      type: Available
+  details:
+    causes:
+      - imageTrigger:
+          from:
+            kind: DockerImage
+            name: >-
+              docker-registry.default.svc:5000/esign-handler/tpo-portal@sha256:b261cd6169bb29a5497a9ad821729e651df6949bef4a03816c7ce4e1fde955df
+        type: ImageChange
+    message: image change
+  latestVersion: 4
+  observedGeneration: 5
+  readyReplicas: 1
+  replicas: 1
+  unavailableReplicas: 0
+  updatedReplicas: 1
