@@ -1,0 +1,96 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: '2020-02-20T13:52:10Z'
+  generation: 23
+  labels:
+    app: mortgage-app
+  name: mortgage-app
+  namespace: esign-handler
+  resourceVersion: '1098972151'
+  selfLink: >-
+    /apis/apps.openshift.io/v1/namespaces/esign-handler/deploymentconfigs/mortgage-app
+  uid: 30d24879-53e8-11ea-ae96-12b5519f9b58
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    app: mortgage-app
+    deploymentconfig: mortgage-app
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        app: mortgage-app
+        deploymentconfig: mortgage-app
+    spec:
+      containers:
+        - image: >-
+            docker-registry.default.svc:5000/esign-handler/mortgage-ui@sha256:feb8cff6b9d68b9b13b634538a70f64aeb1008806a7ad28c4432aa76157854ea
+          imagePullPolicy: Always
+          name: mortgage-app
+          ports:
+            - containerPort: 8443
+              protocol: TCP
+            - containerPort: 8081
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - mortgage-app
+        from:
+          kind: ImageStreamTag
+          name: 'mortgage-ui:latest'
+          namespace: esign-handler
+        lastTriggeredImage: >-
+          docker-registry.default.svc:5000/esign-handler/mortgage-ui@sha256:feb8cff6b9d68b9b13b634538a70f64aeb1008806a7ad28c4432aa76157854ea
+      type: ImageChange
+    - type: ConfigChange
+status:
+  availableReplicas: 1
+  conditions:
+    - lastTransitionTime: '2020-03-12T05:14:34Z'
+      lastUpdateTime: '2020-03-12T05:14:37Z'
+      message: replication controller "mortgage-app-15" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: 'True'
+      type: Progressing
+    - lastTransitionTime: '2020-07-26T23:46:39Z'
+      lastUpdateTime: '2020-07-26T23:46:39Z'
+      message: Deployment config has minimum availability.
+      status: 'True'
+      type: Available
+  details:
+    causes:
+      - type: Manual
+    message: manual change
+  latestVersion: 15
+  observedGeneration: 23
+  readyReplicas: 1
+  replicas: 1
+  unavailableReplicas: 0
+  updatedReplicas: 1
